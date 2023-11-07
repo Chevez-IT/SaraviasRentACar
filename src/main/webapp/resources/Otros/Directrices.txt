@@ -1,0 +1,21 @@
+|---------------------------------------------|
+|--   Creacion de usuarios y perfiles  --|
+|---------------------------------------------|
+Datos solicitados:
+foto
+nombres
+apellidos
+correo
+telefono
+direccion
+dui
+Datos quemados:
+estado_user = Activo
+estado_emp = Activo
+rol_id = 3
+Datos generados:
+username= primera palabra de nombres + primera palabra de apellidos + ###
+usuarioId = primera letra de nombres + primera letra de apellidos + ###
+empleadoId = usuarioId + P (inicial del rol)
+### es un numero random que se aplica tanto a username y usuarioId, es el mismo para los dos.
+existen campos que se adaptaran a la tabla de perfil donde se vaya a crear, ya sea empleados, clientes, empleados o administradores
