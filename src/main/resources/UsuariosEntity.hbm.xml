@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.UsuariosEntity" table="usuarios" schema="saravias_rentacar">
+        <id name="usuarioId">
+            <column name="usuario_id" sql-type="varchar(5)" length="5"/>
+        </id>
+        <property name="username">
+            <column name="username" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="correoUser">
+            <column name="correo_user" sql-type="varchar(255)"/>
+        </property>
+        <property name="contrasenaUser">
+            <column name="contrasena_user" sql-type="varchar(255)"/>
+        </property>
+        <property name="estadoUser">
+            <column name="estado_user" sql-type="enum('activo', 'inactivo')"/>
+        </property>
+        <many-to-one name="rolesByRolId" class="sv.saraviasrenacar.www.entities.RolesEntity">
+            <column name="rol_id"/>
+        </many-to-one>
+        <set name="administradoresByUsuarioId" inverse="true">
+            <key>
+                <column name="usuario_admin"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.AdministradoresEntity"/>
+        </set>
+        <set name="clientesByUsuarioId" inverse="true">
+            <key>
+                <column name="usuario_cliente"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ClientesEntity"/>
+        </set>
+        <set name="empleadosByUsuarioId" inverse="true">
+            <key>
+                <column name="usuario_empleado"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.EmpleadosEntity"/>
+        </set>
+        <set name="propietariosByUsuarioId" inverse="true">
+            <key>
+                <column name="usuario_propietario"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.PropietariosEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

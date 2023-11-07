@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.ArquileresEntity" table="arquileres" schema="saravias_rentacar">
+        <id name="arquilerId">
+            <column name="arquiler_id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="tituloArquiler">
+            <column name="titulo_arquiler" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="descripcionArquiler">
+            <column name="descripcion_arquiler" sql-type="text"/>
+        </property>
+        <property name="precioArquiler">
+            <column name="precio_arquiler" sql-type="decimal(10,2)" precision="10" scale="2"/>
+        </property>
+        <property name="estadoArquiler">
+            <column name="estado_arquiler" sql-type="enum('disponible', 'en espera', 'no disponible', 'ocupado')"/>
+        </property>
+        <many-to-one name="vehiculosByVehiculoId" class="sv.saraviasrenacar.www.entities.VehiculosEntity">
+            <column name="vehiculo_id"/>
+        </many-to-one>
+        <many-to-one name="empleadosByGestorId" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
+            <column name="gestor_id"/>
+        </many-to-one>
+        <set name="conversacionesByArquilerId" inverse="true">
+            <key>
+                <column name="publicacion_conv"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

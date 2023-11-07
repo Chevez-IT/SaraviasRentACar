@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.ImgVehiculosEntity" table="img_vehiculos" schema="saravias_rentacar">
+        <id name="imgVehiculoId">
+            <column name="img_vehiculo_id" sql-type="varchar(12)" length="12"/>
+        </id>
+        <property name="imgVehiculo">
+            <column name="img_vehiculo" sql-type="text"/>
+        </property>
+        <many-to-one name="vehiculosByVehiculoId" class="sv.saraviasrenacar.www.entities.VehiculosEntity">
+            <column name="vehiculo_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

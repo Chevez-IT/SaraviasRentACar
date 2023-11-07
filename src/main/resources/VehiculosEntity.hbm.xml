@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.VehiculosEntity" table="vehiculos" schema="saravias_rentacar">
+        <id name="vehiculoId">
+            <column name="vehiculo_id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="marcaVehiculo">
+            <column name="marca_vehiculo" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="modeloVehiculo">
+            <column name="modelo_vehiculo" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="añoVehiculo">
+            <column name="año_vehiculo" sql-type="int(4)"/>
+        </property>
+        <property name="tipoVehiculo">
+            <column name="tipo_vehiculo" sql-type="enum('pick up', 'sedan', 'camioneta', 'urban', 'motocicleta')"/>
+        </property>
+        <property name="colorVehiculo">
+            <column name="color_vehiculo" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="estadoVehiculo">
+            <column name="estado_vehiculo" sql-type="enum('activo', 'inactivo', '', '')"/>
+        </property>
+        <property name="placaVehiculo">
+            <column name="placa_vehiculo" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="motorVehiculo">
+            <column name="motor_vehiculo" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="consumoVehiculo">
+            <column name="consumo_vehiculo" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="fechaCreacion">
+            <column name="fecha_creacion" sql-type="timestamp"/>
+        </property>
+        <many-to-one name="propietariosByPropietarioVehiculo"
+                     class="sv.saraviasrenacar.www.entities.PropietariosEntity">
+            <column name="propietario_vehiculo"/>
+        </many-to-one>
+        <set name="arquileresByVehiculoId" inverse="true">
+            <key>
+                <column name="vehiculo_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ArquileresEntity"/>
+        </set>
+        <set name="imgVehiculosByVehiculoId" inverse="true">
+            <key>
+                <column name="vehiculo_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ImgVehiculosEntity"/>
+        </set>
+        <set name="ventasByVehiculoId" inverse="true">
+            <key>
+                <column name="vehiculo_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.VentasEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.VentasEntity" table="ventas" schema="saravias_rentacar">
+        <id name="ventaId">
+            <column name="venta_id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="tituloVenta">
+            <column name="titulo_venta" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="descripcionVenta">
+            <column name="descripcion_venta" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="precioVenta">
+            <column name="precio_venta" sql-type="varchar(255)"/>
+        </property>
+        <property name="estadoVenta">
+            <column name="estado_venta" sql-type="enum('disponible', 'no disponible', 'vendido', '')"/>
+        </property>
+        <many-to-one name="vehiculosByVehiculoId" class="sv.saraviasrenacar.www.entities.VehiculosEntity">
+            <column name="vehiculo_id"/>
+        </many-to-one>
+        <many-to-one name="empleadosByGestorId" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
+            <column name="gestor_id"/>
+        </many-to-one>
+        <set name="conversacionesByVentaId" inverse="true">
+            <key>
+                <column name="publicacion_conv"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

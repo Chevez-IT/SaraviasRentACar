@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.ClientesEntity" table="clientes" schema="saravias_rentacar">
+        <id name="clienteId">
+            <column name="cliente_id" sql-type="varchar(6)" length="6"/>
+        </id>
+        <property name="fotoCli">
+            <column name="foto_cli" sql-type="text"/>
+        </property>
+        <property name="nombresCli">
+            <column name="nombres_cli" sql-type="varchar(255)"/>
+        </property>
+        <property name="apellidosCli">
+            <column name="apellidos_cli" sql-type="varchar(255)"/>
+        </property>
+        <property name="telefonoCli">
+            <column name="telefono_cli" sql-type="varchar(10)" length="10"/>
+        </property>
+        <property name="direccionCli">
+            <column name="direccion_cli" sql-type="text"/>
+        </property>
+        <property name="duiCli">
+            <column name="dui_cli" sql-type="varchar(11)" length="11"/>
+        </property>
+        <property name="fechaCreacionCli">
+            <column name="fecha_creacion_cli" sql-type="timestamp"/>
+        </property>
+        <property name="estadoCli">
+            <column name="estado_cli" sql-type="enum('activo', 'inactivo')"/>
+        </property>
+        <many-to-one name="usuariosByUsuarioCliente" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
+            <column name="usuario_cliente"/>
+        </many-to-one>
+        <set name="conversacionesByClienteId" inverse="true">
+            <key>
+                <column name="usuario_conv"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
+        </set>
+        <set name="mensajesByClienteId" inverse="true">
+            <key>
+                <column name="emisor_mensaje"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

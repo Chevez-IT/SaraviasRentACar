@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.MensajesEntity" table="mensajes" schema="saravias_rentacar">
+        <id name="mensajeId">
+            <column name="mensaje_id" sql-type="varchar(12)" length="12"/>
+        </id>
+        <property name="mensaje">
+            <column name="mensaje" sql-type="text"/>
+        </property>
+        <property name="fechaCreacion">
+            <column name="fecha_creacion" sql-type="timestamp"/>
+        </property>
+        <property name="estado">
+            <column name="estado" sql-type="enum('enviado', 'recibido', 'leido')"/>
+        </property>
+        <many-to-one name="clientesByEmisorMensaje" class="sv.saraviasrenacar.www.entities.ClientesEntity">
+            <column name="emisor_mensaje"/>
+        </many-to-one>
+        <many-to-one name="empleadosByEmisorMensaje" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
+            <column name="emisor_mensaje"/>
+        </many-to-one>
+        <many-to-one name="propietariosByEmisorMensaje" class="sv.saraviasrenacar.www.entities.PropietariosEntity">
+            <column name="emisor_mensaje"/>
+        </many-to-one>
+        <many-to-one name="conversacionesByConversacionId" class="sv.saraviasrenacar.www.entities.ConversacionesEntity">
+            <column name="conversacion_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

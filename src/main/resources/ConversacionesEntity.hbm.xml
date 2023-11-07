@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.ConversacionesEntity" table="conversaciones"
+           schema="saravias_rentacar">
+        <id name="conversacionesId">
+            <column name="conversaciones_id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="fechaCreacionConv">
+            <column name="fecha_creacion_conv" sql-type="timestamp"/>
+        </property>
+        <property name="estadoConv">
+            <column name="estado_conv" sql-type="enum('en linea', 'fuera de linea', '', '')"/>
+        </property>
+        <many-to-one name="arquileresByPublicacionConv" class="sv.saraviasrenacar.www.entities.ArquileresEntity">
+            <column name="publicacion_conv"/>
+        </many-to-one>
+        <many-to-one name="ventasByPublicacionConv" class="sv.saraviasrenacar.www.entities.VentasEntity">
+            <column name="publicacion_conv"/>
+        </many-to-one>
+        <many-to-one name="empleadosByEmpleadoConv" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
+            <column name="empleado_conv"/>
+        </many-to-one>
+        <many-to-one name="clientesByUsuarioConv" class="sv.saraviasrenacar.www.entities.ClientesEntity">
+            <column name="usuario_conv"/>
+        </many-to-one>
+        <many-to-one name="propietariosByUsuarioConv" class="sv.saraviasrenacar.www.entities.PropietariosEntity">
+            <column name="usuario_conv"/>
+        </many-to-one>
+        <set name="mensajesByConversacionesId" inverse="true">
+            <key>
+                <column name="conversacion_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

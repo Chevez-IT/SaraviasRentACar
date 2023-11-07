@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.PropietariosEntity" table="propietarios" schema="saravias_rentacar">
+        <id name="propietarioId">
+            <column name="propietario_id" sql-type="varchar(6)" length="6"/>
+        </id>
+        <property name="fotoProp">
+            <column name="foto_prop" sql-type="text"/>
+        </property>
+        <property name="nombresProp">
+            <column name="nombres_prop" sql-type="varchar(255)"/>
+        </property>
+        <property name="apellidosProp">
+            <column name="apellidos_prop" sql-type="varchar(255)"/>
+        </property>
+        <property name="telefonoProp">
+            <column name="telefono_prop" sql-type="varchar(10)" length="10"/>
+        </property>
+        <property name="duiProp">
+            <column name="dui_prop" sql-type="varchar(11)" length="11"/>
+        </property>
+        <property name="direccionProp">
+            <column name="direccion_prop" sql-type="text"/>
+        </property>
+        <property name="fechaCreacionProp">
+            <column name="fecha_creacion_prop" sql-type="timestamp"/>
+        </property>
+        <property name="estadoProp">
+            <column name="estado_prop" sql-type="enum('activo', 'inactivo', 'sin aprobacion')"/>
+        </property>
+        <many-to-one name="usuariosByUsuarioPropietario" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
+            <column name="usuario_propietario"/>
+        </many-to-one>
+        <many-to-one name="empleadosByGestorId" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
+            <column name="gestor_id"/>
+        </many-to-one>
+        <set name="conversacionesByPropietarioId" inverse="true">
+            <key>
+                <column name="usuario_conv"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
+        </set>
+        <set name="mensajesByPropietarioId" inverse="true">
+            <key>
+                <column name="emisor_mensaje"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+        </set>
+        <set name="vehiculosByPropietarioId" inverse="true">
+            <key>
+                <column name="propietario_vehiculo"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.VehiculosEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

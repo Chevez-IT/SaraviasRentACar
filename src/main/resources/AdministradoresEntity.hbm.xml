@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sv.saraviasrenacar.www.entities.AdministradoresEntity" table="administradores"
+           schema="saravias_rentacar">
+        <id name="administradorId">
+            <column name="administrador_id" sql-type="varchar(6)" length="6"/>
+        </id>
+        <property name="fotoAdmin">
+            <column name="foto_admin" sql-type="text"/>
+        </property>
+        <property name="nombresAdmin">
+            <column name="nombres_admin" sql-type="varchar(255)"/>
+        </property>
+        <property name="apellidosAdmin">
+            <column name="apellidos_admin" sql-type="varchar(255)"/>
+        </property>
+        <property name="telefonoAdmin">
+            <column name="telefono_admin" sql-type="varchar(10)" length="10"/>
+        </property>
+        <property name="fechaCreacionAdmin">
+            <column name="fecha_creacion_admin" sql-type="timestamp"/>
+        </property>
+        <property name="estadoAdmin">
+            <column name="estado_admin" sql-type="enum('activo', 'inactivo')"/>
+        </property>
+        <many-to-one name="usuariosByUsuarioAdmin" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
+            <column name="usuario_admin"/>
+        </many-to-one>
+        <set name="empleadosByAdministradorId" inverse="true">
+            <key>
+                <column name="creador_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.EmpleadosEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>
