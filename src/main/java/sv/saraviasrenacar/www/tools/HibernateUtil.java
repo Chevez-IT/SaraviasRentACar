@@ -1,9 +1,9 @@
-package sv.saraviasrenacar.www.login;
+package sv.saraviasrenacar.www.tools;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HiberneteUtil {
+public class HibernateUtil {
 	private static final SessionFactory sessionFactory;
 	static {
 		try {
