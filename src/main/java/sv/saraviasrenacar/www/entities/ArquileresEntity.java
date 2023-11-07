@@ -1,13 +1,13 @@
 package sv.saraviasrenacar.www.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "arquileres", schema = "saravias_rentacar", catalog = "")
-public class ArquileresEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "arquileres", schema = "saravias_rentacar")
+public class ArquileresEntity implements Serializable {
 	@Id
 	@Column(name = "arquiler_id", nullable = false, length = 10)
 	private String arquilerId;

@@ -1,12 +1,13 @@
 package sv.saraviasrenacar.www.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "roles", schema = "saravias_rentacar", catalog = "")
-public class RolesEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "roles", schema = "saravias_rentacar")
+public class RolesEntity implements Serializable {
+
 	@Id
 	@Column(name = "rol_id", nullable = false, length = 5)
 	private String rolId;

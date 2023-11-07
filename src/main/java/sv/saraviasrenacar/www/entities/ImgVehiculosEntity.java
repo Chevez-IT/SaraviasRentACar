@@ -1,11 +1,11 @@
 package sv.saraviasrenacar.www.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "img_vehiculos", schema = "saravias_rentacar", catalog = "")
-public class ImgVehiculosEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "img_vehiculos", schema = "saravias_rentacar")
+public class ImgVehiculosEntity implements Serializable {
 	@Id
 	@Column(name = "img_vehiculo_id", nullable = false, length = 12)
 	private String imgVehiculoId;

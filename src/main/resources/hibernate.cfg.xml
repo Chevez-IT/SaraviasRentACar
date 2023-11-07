@@ -4,8 +4,31 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url"/>
-    <property name="connection.driver_class"/>
+    <property name="connection.url">jdbc:mysql://localhost:3306/saravias_rentacar?useSSL=false</property>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.username">root</property>
+    <mapping class="sv.saraviasrenacar.www.entities.AdministradoresEntity"/>
+    <mapping resource="AdministradoresEntity.hbm.xml"/>
+    <mapping resource="ArquileresEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.ArquileresEntity"/>
+    <mapping class="sv.saraviasrenacar.www.entities.ClientesEntity"/>
+    <mapping resource="ClientesEntity.hbm.xml"/>
+    <mapping resource="EmpleadosEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.EmpleadosEntity"/>
+    <mapping class="sv.saraviasrenacar.www.entities.ImgVehiculosEntity"/>
+    <mapping resource="ImgVehiculosEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+    <mapping resource="MensajesEntity.hbm.xml"/>
+    <mapping resource="PropietariosEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.PropietariosEntity"/>
+    <mapping resource="RolesEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.RolesEntity"/>
+    <mapping class="sv.saraviasrenacar.www.entities.UsuariosEntity"/>
+    <mapping resource="UsuariosEntity.hbm.xml"/>
+    <mapping resource="VehiculosEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.VehiculosEntity"/>
+    <mapping resource="VentasEntity.hbm.xml"/>
+    <mapping class="sv.saraviasrenacar.www.entities.VentasEntity"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
