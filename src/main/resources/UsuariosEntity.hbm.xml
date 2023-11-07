@@ -18,7 +18,7 @@
             <column name="contrasena_user" sql-type="varchar(255)"/>
         </property>
         <property name="estadoUser">
-            <column name="estado_user" sql-type="enum('activo', 'inactivo')"/>
+            <column name="estado_user" sql-type="varchar(25)" length="25"/>
         </property>
         <many-to-one name="rolesByRolId" class="sv.saraviasrenacar.www.entities.RolesEntity">
             <column name="rol_id"/>
@@ -40,6 +40,18 @@
                 <column name="usuario_empleado"/>
             </key>
             <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.EmpleadosEntity"/>
+        </set>
+        <set name="mensajesByUsuarioId" inverse="true">
+            <key>
+                <column name="emisor_mensaje"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+        </set>
+        <set name="mensajesByUsuarioId_0" inverse="true">
+            <key>
+                <column name="receptor_mensaje"/>
+            </key>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
         </set>
         <set name="propietariosByUsuarioId" inverse="true">
             <key>

@@ -17,20 +17,14 @@ public class MensajesEntity {
 	@Column(name = "fecha_creacion", nullable = false)
 	private Date fechaCreacion;
 	@Basic
-	@Column(name = "estado", nullable = false)
-	private String estado;
+	@Column(name = "estado_mensaje", nullable = false, length = 25)
+	private String estadoMensaje;
 	@ManyToOne
-	@JoinColumn(name = "emisor_mensaje", referencedColumnName = "cliente_id", nullable = false)
-	private ClientesEntity clientesByEmisorMensaje;
+	@JoinColumn(name = "emisor_mensaje", referencedColumnName = "usuario_id", nullable = false)
+	private UsuariosEntity usuariosByEmisorMensaje;
 	@ManyToOne
-	@JoinColumn(name = "emisor_mensaje", referencedColumnName = "empleado_id", nullable = false)
-	private EmpleadosEntity empleadosByEmisorMensaje;
-	@ManyToOne
-	@JoinColumn(name = "emisor_mensaje", referencedColumnName = "propietario_id", nullable = false)
-	private PropietariosEntity propietariosByEmisorMensaje;
-	@ManyToOne
-	@JoinColumn(name = "conversacion_id", referencedColumnName = "conversaciones_id", nullable = false)
-	private ConversacionesEntity conversacionesByConversacionId;
+	@JoinColumn(name = "receptor_mensaje", referencedColumnName = "usuario_id", nullable = false)
+	private UsuariosEntity usuariosByReceptorMensaje;
 
 	public String getMensajeId() {
 		return mensajeId;
@@ -56,43 +50,27 @@ public class MensajesEntity {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getEstadoMensaje() {
+		return estadoMensaje;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setEstadoMensaje(String estadoMensaje) {
+		this.estadoMensaje = estadoMensaje;
 	}
 
-	public ClientesEntity getClientesByEmisorMensaje() {
-		return clientesByEmisorMensaje;
+	public UsuariosEntity getUsuariosByEmisorMensaje() {
+		return usuariosByEmisorMensaje;
 	}
 
-	public void setClientesByEmisorMensaje(ClientesEntity clientesByEmisorMensaje) {
-		this.clientesByEmisorMensaje = clientesByEmisorMensaje;
+	public void setUsuariosByEmisorMensaje(UsuariosEntity usuariosByEmisorMensaje) {
+		this.usuariosByEmisorMensaje = usuariosByEmisorMensaje;
 	}
 
-	public EmpleadosEntity getEmpleadosByEmisorMensaje() {
-		return empleadosByEmisorMensaje;
+	public UsuariosEntity getUsuariosByReceptorMensaje() {
+		return usuariosByReceptorMensaje;
 	}
 
-	public void setEmpleadosByEmisorMensaje(EmpleadosEntity empleadosByEmisorMensaje) {
-		this.empleadosByEmisorMensaje = empleadosByEmisorMensaje;
-	}
-
-	public PropietariosEntity getPropietariosByEmisorMensaje() {
-		return propietariosByEmisorMensaje;
-	}
-
-	public void setPropietariosByEmisorMensaje(PropietariosEntity propietariosByEmisorMensaje) {
-		this.propietariosByEmisorMensaje = propietariosByEmisorMensaje;
-	}
-
-	public ConversacionesEntity getConversacionesByConversacionId() {
-		return conversacionesByConversacionId;
-	}
-
-	public void setConversacionesByConversacionId(ConversacionesEntity conversacionesByConversacionId) {
-		this.conversacionesByConversacionId = conversacionesByConversacionId;
+	public void setUsuariosByReceptorMensaje(UsuariosEntity usuariosByReceptorMensaje) {
+		this.usuariosByReceptorMensaje = usuariosByReceptorMensaje;
 	}
 }

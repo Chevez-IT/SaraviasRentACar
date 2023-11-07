@@ -30,22 +30,22 @@
             <column name="fecha_creacion_cli" sql-type="timestamp"/>
         </property>
         <property name="estadoCli">
-            <column name="estado_cli" sql-type="enum('activo', 'inactivo')"/>
+            <column name="estado_cli" sql-type="varchar(25)" length="25"/>
         </property>
         <many-to-one name="usuariosByUsuarioCliente" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
             <column name="usuario_cliente"/>
         </many-to-one>
-        <set name="conversacionesByClienteId" inverse="true">
+        <set name="arquileresByClienteId" inverse="true">
             <key>
-                <column name="usuario_conv"/>
+                <column name="cliente_actual"/>
             </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ArquileresEntity"/>
         </set>
-        <set name="mensajesByClienteId" inverse="true">
+        <set name="ventasByClienteId" inverse="true">
             <key>
-                <column name="emisor_mensaje"/>
+                <column name="comprador_venta"/>
             </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
+            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.VentasEntity"/>
         </set>
     </class>
 </hibernate-mapping>

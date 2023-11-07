@@ -30,7 +30,7 @@
             <column name="fecha_creacion_emp" sql-type="timestamp"/>
         </property>
         <property name="estadoEmp">
-            <column name="estado_emp" sql-type="enum('activo', 'inactivo')"/>
+            <column name="estado_emp" sql-type="varchar(25)" length="25"/>
         </property>
         <many-to-one name="usuariosByUsuarioEmpleado" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
             <column name="usuario_empleado"/>
@@ -43,18 +43,6 @@
                 <column name="gestor_id"/>
             </key>
             <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ArquileresEntity"/>
-        </set>
-        <set name="conversacionesByEmpleadoId" inverse="true">
-            <key>
-                <column name="empleado_conv"/>
-            </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
-        </set>
-        <set name="mensajesByEmpleadoId" inverse="true">
-            <key>
-                <column name="emisor_mensaje"/>
-            </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.MensajesEntity"/>
         </set>
         <set name="propietariosByEmpleadoId" inverse="true">
             <key>

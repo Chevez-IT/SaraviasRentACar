@@ -20,7 +20,7 @@ public class UsuariosEntity {
 	@Column(name = "contrasena_user", nullable = false, length = 255)
 	private String contrasenaUser;
 	@Basic
-	@Column(name = "estado_user", nullable = false)
+	@Column(name = "estado_user", nullable = false, length = 25)
 	private String estadoUser;
 	@OneToMany(mappedBy = "usuariosByUsuarioAdmin")
 	private Collection<AdministradoresEntity> administradoresByUsuarioId;
@@ -28,6 +28,10 @@ public class UsuariosEntity {
 	private Collection<ClientesEntity> clientesByUsuarioId;
 	@OneToMany(mappedBy = "usuariosByUsuarioEmpleado")
 	private Collection<EmpleadosEntity> empleadosByUsuarioId;
+	@OneToMany(mappedBy = "usuariosByEmisorMensaje")
+	private Collection<MensajesEntity> mensajesByUsuarioId;
+	@OneToMany(mappedBy = "usuariosByReceptorMensaje")
+	private Collection<MensajesEntity> mensajesByUsuarioId_0;
 	@OneToMany(mappedBy = "usuariosByUsuarioPropietario")
 	private Collection<PropietariosEntity> propietariosByUsuarioId;
 	@ManyToOne
@@ -96,6 +100,22 @@ public class UsuariosEntity {
 
 	public void setEmpleadosByUsuarioId(Collection<EmpleadosEntity> empleadosByUsuarioId) {
 		this.empleadosByUsuarioId = empleadosByUsuarioId;
+	}
+
+	public Collection<MensajesEntity> getMensajesByUsuarioId() {
+		return mensajesByUsuarioId;
+	}
+
+	public void setMensajesByUsuarioId(Collection<MensajesEntity> mensajesByUsuarioId) {
+		this.mensajesByUsuarioId = mensajesByUsuarioId;
+	}
+
+	public Collection<MensajesEntity> getMensajesByUsuarioId_0() {
+		return mensajesByUsuarioId_0;
+	}
+
+	public void setMensajesByUsuarioId_0(Collection<MensajesEntity> mensajesByUsuarioId_0) {
+		this.mensajesByUsuarioId_0 = mensajesByUsuarioId_0;
 	}
 
 	public Collection<PropietariosEntity> getPropietariosByUsuarioId() {

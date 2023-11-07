@@ -33,12 +33,8 @@ public class PropietariosEntity {
 	@Column(name = "fecha_creacion_prop", nullable = false)
 	private Date fechaCreacionProp;
 	@Basic
-	@Column(name = "estado_prop", nullable = false)
+	@Column(name = "estado_prop", nullable = false, length = 25)
 	private String estadoProp;
-	@OneToMany(mappedBy = "propietariosByUsuarioConv")
-	private Collection<ConversacionesEntity> conversacionesByPropietarioId;
-	@OneToMany(mappedBy = "propietariosByEmisorMensaje")
-	private Collection<MensajesEntity> mensajesByPropietarioId;
 	@ManyToOne
 	@JoinColumn(name = "usuario_propietario", referencedColumnName = "usuario_id", nullable = false)
 	private UsuariosEntity usuariosByUsuarioPropietario;
@@ -118,22 +114,6 @@ public class PropietariosEntity {
 
 	public void setEstadoProp(String estadoProp) {
 		this.estadoProp = estadoProp;
-	}
-
-	public Collection<ConversacionesEntity> getConversacionesByPropietarioId() {
-		return conversacionesByPropietarioId;
-	}
-
-	public void setConversacionesByPropietarioId(Collection<ConversacionesEntity> conversacionesByPropietarioId) {
-		this.conversacionesByPropietarioId = conversacionesByPropietarioId;
-	}
-
-	public Collection<MensajesEntity> getMensajesByPropietarioId() {
-		return mensajesByPropietarioId;
-	}
-
-	public void setMensajesByPropietarioId(Collection<MensajesEntity> mensajesByPropietarioId) {
-		this.mensajesByPropietarioId = mensajesByPropietarioId;
 	}
 
 	public UsuariosEntity getUsuariosByUsuarioPropietario() {

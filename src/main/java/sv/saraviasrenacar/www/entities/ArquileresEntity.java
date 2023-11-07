@@ -1,7 +1,8 @@
 package sv.saraviasrenacar.www.entities;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "arquileres", schema = "saravias_rentacar", catalog = "")
@@ -18,18 +19,28 @@ public class ArquileresEntity {
 	private String descripcionArquiler;
 	@Basic
 	@Column(name = "precio_arquiler", nullable = false, precision = 2)
-	private Integer precioArquiler;
+	private BigDecimal precioArquiler;
 	@Basic
-	@Column(name = "estado_arquiler", nullable = false)
+	@Column(name = "fecha_inicio", nullable = false)
+	private Date fechaInicio;
+	@Basic
+	@Column(name = "fecha_finalizacion", nullable = false)
+	private Date fechaFinalizacion;
+	@Basic
+	@Column(name = "estado_arquiler", nullable = false, length = 25)
 	private String estadoArquiler;
+	@Basic
+	@Column(name = "fecha_creacion", nullable = false)
+	private Date fechaCreacion;
 	@ManyToOne
 	@JoinColumn(name = "vehiculo_id", referencedColumnName = "vehiculo_id", nullable = false)
 	private VehiculosEntity vehiculosByVehiculoId;
 	@ManyToOne
+	@JoinColumn(name = "cliente_actual", referencedColumnName = "cliente_id", nullable = false)
+	private ClientesEntity clientesByClienteActual;
+	@ManyToOne
 	@JoinColumn(name = "gestor_id", referencedColumnName = "empleado_id", nullable = false)
 	private EmpleadosEntity empleadosByGestorId;
-	@OneToMany(mappedBy = "arquileresByPublicacionConv")
-	private Collection<ConversacionesEntity> conversacionesByArquilerId;
 
 	public String getArquilerId() {
 		return arquilerId;
@@ -55,12 +66,28 @@ public class ArquileresEntity {
 		this.descripcionArquiler = descripcionArquiler;
 	}
 
-	public Integer getPrecioArquiler() {
+	public BigDecimal getPrecioArquiler() {
 		return precioArquiler;
 	}
 
-	public void setPrecioArquiler(Integer precioArquiler) {
+	public void setPrecioArquiler(BigDecimal precioArquiler) {
 		this.precioArquiler = precioArquiler;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFinalizacion() {
+		return fechaFinalizacion;
+	}
+
+	public void setFechaFinalizacion(Date fechaFinalizacion) {
+		this.fechaFinalizacion = fechaFinalizacion;
 	}
 
 	public String getEstadoArquiler() {
@@ -71,6 +98,14 @@ public class ArquileresEntity {
 		this.estadoArquiler = estadoArquiler;
 	}
 
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
 	public VehiculosEntity getVehiculosByVehiculoId() {
 		return vehiculosByVehiculoId;
 	}
@@ -79,19 +114,19 @@ public class ArquileresEntity {
 		this.vehiculosByVehiculoId = vehiculosByVehiculoId;
 	}
 
+	public ClientesEntity getClientesByClienteActual() {
+		return clientesByClienteActual;
+	}
+
+	public void setClientesByClienteActual(ClientesEntity clientesByClienteActual) {
+		this.clientesByClienteActual = clientesByClienteActual;
+	}
+
 	public EmpleadosEntity getEmpleadosByGestorId() {
 		return empleadosByGestorId;
 	}
 
 	public void setEmpleadosByGestorId(EmpleadosEntity empleadosByGestorId) {
 		this.empleadosByGestorId = empleadosByGestorId;
-	}
-
-	public Collection<ConversacionesEntity> getConversacionesByArquilerId() {
-		return conversacionesByArquilerId;
-	}
-
-	public void setConversacionesByArquilerId(Collection<ConversacionesEntity> conversacionesByArquilerId) {
-		this.conversacionesByArquilerId = conversacionesByArquilerId;
 	}
 }

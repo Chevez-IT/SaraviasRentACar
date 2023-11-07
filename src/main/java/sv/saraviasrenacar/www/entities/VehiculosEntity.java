@@ -21,13 +21,13 @@ public class VehiculosEntity {
 	@Column(name = "año_vehiculo", nullable = false)
 	private Integer añoVehiculo;
 	@Basic
-	@Column(name = "tipo_vehiculo", nullable = false)
+	@Column(name = "tipo_vehiculo", nullable = false, length = 100)
 	private String tipoVehiculo;
 	@Basic
 	@Column(name = "color_vehiculo", nullable = false, length = 20)
 	private String colorVehiculo;
 	@Basic
-	@Column(name = "estado_vehiculo", nullable = false)
+	@Column(name = "estado_vehiculo", nullable = false, length = 25)
 	private String estadoVehiculo;
 	@Basic
 	@Column(name = "placa_vehiculo", nullable = false, length = 20)

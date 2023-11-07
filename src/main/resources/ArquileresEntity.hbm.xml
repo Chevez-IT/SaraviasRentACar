@@ -17,20 +17,26 @@
         <property name="precioArquiler">
             <column name="precio_arquiler" sql-type="decimal(10,2)" precision="10" scale="2"/>
         </property>
+        <property name="fechaInicio">
+            <column name="fecha_inicio" sql-type="date"/>
+        </property>
+        <property name="fechaFinalizacion">
+            <column name="fecha_finalizacion" sql-type="date"/>
+        </property>
         <property name="estadoArquiler">
-            <column name="estado_arquiler" sql-type="enum('disponible', 'en espera', 'no disponible', 'ocupado')"/>
+            <column name="estado_arquiler" sql-type="varchar(25)" length="25"/>
+        </property>
+        <property name="fechaCreacion">
+            <column name="fecha_creacion" sql-type="timestamp"/>
         </property>
         <many-to-one name="vehiculosByVehiculoId" class="sv.saraviasrenacar.www.entities.VehiculosEntity">
             <column name="vehiculo_id"/>
         </many-to-one>
+        <many-to-one name="clientesByClienteActual" class="sv.saraviasrenacar.www.entities.ClientesEntity">
+            <column name="cliente_actual"/>
+        </many-to-one>
         <many-to-one name="empleadosByGestorId" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
             <column name="gestor_id"/>
         </many-to-one>
-        <set name="conversacionesByArquilerId" inverse="true">
-            <key>
-                <column name="publicacion_conv"/>
-            </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
-        </set>
     </class>
 </hibernate-mapping>

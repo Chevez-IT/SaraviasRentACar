@@ -27,7 +27,7 @@ public class AdministradoresEntity {
 	@Column(name = "fecha_creacion_admin", nullable = false)
 	private Date fechaCreacionAdmin;
 	@Basic
-	@Column(name = "estado_admin", nullable = false)
+	@Column(name = "estado_admin", nullable = false, length = 25)
 	private String estadoAdmin;
 	@ManyToOne
 	@JoinColumn(name = "usuario_admin", referencedColumnName = "usuario_id", nullable = false)

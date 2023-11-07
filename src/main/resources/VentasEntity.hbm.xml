@@ -17,20 +17,23 @@
         <property name="precioVenta">
             <column name="precio_venta" sql-type="varchar(255)"/>
         </property>
+        <property name="fechaCompraVenta">
+            <column name="fecha_compra_venta" sql-type="date"/>
+        </property>
         <property name="estadoVenta">
-            <column name="estado_venta" sql-type="enum('disponible', 'no disponible', 'vendido', '')"/>
+            <column name="estado_venta" sql-type="varchar(25)" length="25"/>
+        </property>
+        <property name="fechaCreacionVenta">
+            <column name="fecha_creacion_venta" sql-type="timestamp"/>
         </property>
         <many-to-one name="vehiculosByVehiculoId" class="sv.saraviasrenacar.www.entities.VehiculosEntity">
             <column name="vehiculo_id"/>
         </many-to-one>
+        <many-to-one name="clientesByCompradorVenta" class="sv.saraviasrenacar.www.entities.ClientesEntity">
+            <column name="comprador_venta"/>
+        </many-to-one>
         <many-to-one name="empleadosByGestorId" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
             <column name="gestor_id"/>
         </many-to-one>
-        <set name="conversacionesByVentaId" inverse="true">
-            <key>
-                <column name="publicacion_conv"/>
-            </key>
-            <one-to-many not-found="ignore" class="sv.saraviasrenacar.www.entities.ConversacionesEntity"/>
-        </set>
     </class>
 </hibernate-mapping>

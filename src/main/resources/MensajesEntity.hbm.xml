@@ -14,20 +14,14 @@
         <property name="fechaCreacion">
             <column name="fecha_creacion" sql-type="timestamp"/>
         </property>
-        <property name="estado">
-            <column name="estado" sql-type="enum('enviado', 'recibido', 'leido')"/>
+        <property name="estadoMensaje">
+            <column name="estado_mensaje" sql-type="varchar(25)" length="25"/>
         </property>
-        <many-to-one name="clientesByEmisorMensaje" class="sv.saraviasrenacar.www.entities.ClientesEntity">
+        <many-to-one name="usuariosByEmisorMensaje" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
             <column name="emisor_mensaje"/>
         </many-to-one>
-        <many-to-one name="empleadosByEmisorMensaje" class="sv.saraviasrenacar.www.entities.EmpleadosEntity">
-            <column name="emisor_mensaje"/>
-        </many-to-one>
-        <many-to-one name="propietariosByEmisorMensaje" class="sv.saraviasrenacar.www.entities.PropietariosEntity">
-            <column name="emisor_mensaje"/>
-        </many-to-one>
-        <many-to-one name="conversacionesByConversacionId" class="sv.saraviasrenacar.www.entities.ConversacionesEntity">
-            <column name="conversacion_id"/>
+        <many-to-one name="usuariosByReceptorMensaje" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
+            <column name="receptor_mensaje"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

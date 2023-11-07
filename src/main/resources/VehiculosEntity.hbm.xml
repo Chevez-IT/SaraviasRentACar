@@ -18,13 +18,13 @@
             <column name="año_vehiculo" sql-type="int(4)"/>
         </property>
         <property name="tipoVehiculo">
-            <column name="tipo_vehiculo" sql-type="enum('pick up', 'sedan', 'camioneta', 'urban', 'motocicleta')"/>
+            <column name="tipo_vehiculo" sql-type="varchar(100)" length="100"/>
         </property>
         <property name="colorVehiculo">
             <column name="color_vehiculo" sql-type="varchar(20)" length="20"/>
         </property>
         <property name="estadoVehiculo">
-            <column name="estado_vehiculo" sql-type="enum('activo', 'inactivo', '', '')"/>
+            <column name="estado_vehiculo" sql-type="varchar(25)" length="25"/>
         </property>
         <property name="placaVehiculo">
             <column name="placa_vehiculo" sql-type="varchar(20)" length="20"/>

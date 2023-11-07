@@ -33,20 +33,16 @@ public class EmpleadosEntity {
 	@Column(name = "fecha_creacion_emp", nullable = false)
 	private Date fechaCreacionEmp;
 	@Basic
-	@Column(name = "estado_emp", nullable = false)
+	@Column(name = "estado_emp", nullable = false, length = 25)
 	private String estadoEmp;
 	@OneToMany(mappedBy = "empleadosByGestorId")
 	private Collection<ArquileresEntity> arquileresByEmpleadoId;
-	@OneToMany(mappedBy = "empleadosByEmpleadoConv")
-	private Collection<ConversacionesEntity> conversacionesByEmpleadoId;
 	@ManyToOne
 	@JoinColumn(name = "usuario_empleado", referencedColumnName = "usuario_id", nullable = false)
 	private UsuariosEntity usuariosByUsuarioEmpleado;
 	@ManyToOne
 	@JoinColumn(name = "creador_id", referencedColumnName = "administrador_id", nullable = false)
 	private AdministradoresEntity administradoresByCreadorId;
-	@OneToMany(mappedBy = "empleadosByEmisorMensaje")
-	private Collection<MensajesEntity> mensajesByEmpleadoId;
 	@OneToMany(mappedBy = "empleadosByGestorId")
 	private Collection<PropietariosEntity> propietariosByEmpleadoId;
 	@OneToMany(mappedBy = "empleadosByGestorId")
@@ -132,14 +128,6 @@ public class EmpleadosEntity {
 		this.arquileresByEmpleadoId = arquileresByEmpleadoId;
 	}
 
-	public Collection<ConversacionesEntity> getConversacionesByEmpleadoId() {
-		return conversacionesByEmpleadoId;
-	}
-
-	public void setConversacionesByEmpleadoId(Collection<ConversacionesEntity> conversacionesByEmpleadoId) {
-		this.conversacionesByEmpleadoId = conversacionesByEmpleadoId;
-	}
-
 	public UsuariosEntity getUsuariosByUsuarioEmpleado() {
 		return usuariosByUsuarioEmpleado;
 	}
@@ -154,14 +142,6 @@ public class EmpleadosEntity {
 
 	public void setAdministradoresByCreadorId(AdministradoresEntity administradoresByCreadorId) {
 		this.administradoresByCreadorId = administradoresByCreadorId;
-	}
-
-	public Collection<MensajesEntity> getMensajesByEmpleadoId() {
-		return mensajesByEmpleadoId;
-	}
-
-	public void setMensajesByEmpleadoId(Collection<MensajesEntity> mensajesByEmpleadoId) {
-		this.mensajesByEmpleadoId = mensajesByEmpleadoId;
 	}
 
 	public Collection<PropietariosEntity> getPropietariosByEmpleadoId() {

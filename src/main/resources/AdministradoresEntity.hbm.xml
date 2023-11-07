@@ -25,7 +25,7 @@
             <column name="fecha_creacion_admin" sql-type="timestamp"/>
         </property>
         <property name="estadoAdmin">
-            <column name="estado_admin" sql-type="enum('activo', 'inactivo')"/>
+            <column name="estado_admin" sql-type="varchar(25)" length="25"/>
         </property>
         <many-to-one name="usuariosByUsuarioAdmin" class="sv.saraviasrenacar.www.entities.UsuariosEntity">
             <column name="usuario_admin"/>

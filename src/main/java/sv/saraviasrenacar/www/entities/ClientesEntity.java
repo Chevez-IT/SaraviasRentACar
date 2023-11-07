@@ -33,15 +33,15 @@ public class ClientesEntity {
 	@Column(name = "fecha_creacion_cli", nullable = false)
 	private Date fechaCreacionCli;
 	@Basic
-	@Column(name = "estado_cli", nullable = false)
+	@Column(name = "estado_cli", nullable = false, length = 25)
 	private String estadoCli;
+	@OneToMany(mappedBy = "clientesByClienteActual")
+	private Collection<ArquileresEntity> arquileresByClienteId;
 	@ManyToOne
 	@JoinColumn(name = "usuario_cliente", referencedColumnName = "usuario_id", nullable = false)
 	private UsuariosEntity usuariosByUsuarioCliente;
-	@OneToMany(mappedBy = "clientesByUsuarioConv")
-	private Collection<ConversacionesEntity> conversacionesByClienteId;
-	@OneToMany(mappedBy = "clientesByEmisorMensaje")
-	private Collection<MensajesEntity> mensajesByClienteId;
+	@OneToMany(mappedBy = "clientesByCompradorVenta")
+	private Collection<VentasEntity> ventasByClienteId;
 
 	public String getClienteId() {
 		return clienteId;
@@ -115,6 +115,14 @@ public class ClientesEntity {
 		this.estadoCli = estadoCli;
 	}
 
+	public Collection<ArquileresEntity> getArquileresByClienteId() {
+		return arquileresByClienteId;
+	}
+
+	public void setArquileresByClienteId(Collection<ArquileresEntity> arquileresByClienteId) {
+		this.arquileresByClienteId = arquileresByClienteId;
+	}
+
 	public UsuariosEntity getUsuariosByUsuarioCliente() {
 		return usuariosByUsuarioCliente;
 	}
@@ -123,19 +131,11 @@ public class ClientesEntity {
 		this.usuariosByUsuarioCliente = usuariosByUsuarioCliente;
 	}
 
-	public Collection<ConversacionesEntity> getConversacionesByClienteId() {
-		return conversacionesByClienteId;
+	public Collection<VentasEntity> getVentasByClienteId() {
+		return ventasByClienteId;
 	}
 
-	public void setConversacionesByClienteId(Collection<ConversacionesEntity> conversacionesByClienteId) {
-		this.conversacionesByClienteId = conversacionesByClienteId;
-	}
-
-	public Collection<MensajesEntity> getMensajesByClienteId() {
-		return mensajesByClienteId;
-	}
-
-	public void setMensajesByClienteId(Collection<MensajesEntity> mensajesByClienteId) {
-		this.mensajesByClienteId = mensajesByClienteId;
+	public void setVentasByClienteId(Collection<VentasEntity> ventasByClienteId) {
+		this.ventasByClienteId = ventasByClienteId;
 	}
 }
