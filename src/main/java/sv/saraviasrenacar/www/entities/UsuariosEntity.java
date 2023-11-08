@@ -39,6 +39,9 @@ public class UsuariosEntity implements Serializable {
 	@JoinColumn(name = "rol_id", referencedColumnName = "rol_id", nullable = false)
 	private RolesEntity rolesByRolId;
 
+	public UsuariosEntity() {
+	}
+
 	public String getUsuarioId() {
 		return usuarioId;
 	}
