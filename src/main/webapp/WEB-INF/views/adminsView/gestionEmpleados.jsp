@@ -21,7 +21,7 @@
     </div>
     <div class="row">
         <div class="col-md-10">
-            <a class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/admin/panel/empleados/new">Nuevo empleado</a>
+            <a class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/Administrador/panel/empleados/new">Nuevo empleado</a>
             <table class="table table-striped table-bordered table-hover" id="tabla">
                 <br>
                 <br>

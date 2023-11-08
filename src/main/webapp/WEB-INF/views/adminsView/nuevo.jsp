@@ -22,54 +22,52 @@
 </div>
 <div class="row">
     <div class=" col-md-7">
-        <f:form method="POST" onsubmit="return false;">
+        <f:form method="POST" action="create" modelAttribute="empleado">
             <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Campos requeridos</strong></div>
 
             <div class="form-group">
-                <label for="codigoEmpleado">ID Empleado:</label>
+                <label for="nombresEmp">Nombres: </label>
                 <div class="input-group">
-
-                    <f:input path="codigoEmpleado" cssClass="form-control"/>
+                    <f:input path="nombresEmp" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="usuarioEmpleado">Usuario empleado:</label>
+                <label for="apellidosEmp">Apellidos </label>
                 <div class="input-group">
-                    <f:input path="usuarioEmpleado" cssClass="form-control"/>
+                    <f:input path="apellidosEmp" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="dui">DUI:</label>
+                <label for="telefonoEmp">Teléfono:</label>
                 <div class="input-group">
-                    <f:input path="dui" cssClass="form-control"/>
+                    <f:input path="telefonoEmp" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="telefono">Teléfono:</label>
+                <label for="correo">Correo electrónico:</label>
                 <div class="input-group">
-                    <f:input path="telefono" cssClass="form-control"/>
+                    <f:input path="correo" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="direccion">Dirección:</label>
+                <label for="duiEmp">DUI: </label>
                 <div class="input-group">
-                    <f:input path="direccion" cssClass="form-control"/>
+                    <f:input path="duiEmp" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="estado">Estado:</label>
+                <label for="direccionEmp">Dirección de domicilio:</label>
                 <div class="input-group">
-                    <f:input path="estado" cssClass="form-control"/>
+                    <f:input path="direccionEmp" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>
             <f:button class="btn btn-info">Guardar</f:button>
-            <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/empleados">Cancelar</a>
         </f:form>
     </div>
 </div>

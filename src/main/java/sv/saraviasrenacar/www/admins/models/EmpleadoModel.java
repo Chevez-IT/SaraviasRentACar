@@ -12,12 +12,12 @@ import sv.saraviasrenacar.www.tools.HibernateUtil;
 
 public class EmpleadoModel {
 
-    SessionFactory factory = HibernateUtil.getSessionFactory();
+    static SessionFactory factory = HibernateUtil.getSessionFactory();
 
     public EmpleadoModel(SessionFactory factory) {
     }
 
-    public int insertarEmpleado(EmpleadosEntity empleado) {
+    public static int insertarEmpleado(EmpleadosEntity empleado) {
         Session ses = factory.openSession();
         try {
             Transaction tran = ses.beginTransaction();

@@ -11,12 +11,12 @@ import sv.saraviasrenacar.www.entities.UsuariosEntity;
 import sv.saraviasrenacar.www.tools.HibernateUtil;
 
 public class UsuarioModel {
-    SessionFactory factory = HibernateUtil.getSessionFactory();
+    static SessionFactory factory = HibernateUtil.getSessionFactory();
 
     public UsuarioModel(SessionFactory factory) {
     }
 
-    public int insertarUsuario(UsuariosEntity usuario) {
+    public static int insertarUsuario(UsuariosEntity usuario) {
         Session ses = factory.openSession();
         try {
             Transaction tran = ses.beginTransaction();
