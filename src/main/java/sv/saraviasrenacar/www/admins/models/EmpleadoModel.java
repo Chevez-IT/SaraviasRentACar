@@ -31,11 +31,11 @@ public class EmpleadoModel {
         }
     }
 
-    public List<EmpleadosEntity> listarEmpleado(){
+    public static List<EmpleadosEntity> listarEmpleado(){
         SessionFactory sesFac = HibernateUtil.getSessionFactory();
         Session ses = sesFac.openSession();
         ArrayList<EmpleadosEntity> listarEmpleado = new ArrayList<EmpleadosEntity>();
-        String sql = "from UsuariosEntity";
+        String sql = "from EmpleadosEntity";
         listarEmpleado = (ArrayList<EmpleadosEntity>) ses.createQuery(sql).list();
         return listarEmpleado;
     }

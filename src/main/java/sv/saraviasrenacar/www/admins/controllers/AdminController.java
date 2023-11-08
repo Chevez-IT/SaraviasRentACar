@@ -2,6 +2,7 @@ package sv.saraviasrenacar.www.admins.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +35,9 @@ public class AdminController {
         return "adminsView/gestionClientes";
     }
 
-    @GetMapping("/panel/empleados")
-    public String empleados() {
+    @RequestMapping(value = "/panel/empleados", method = GET)
+    public String empleados(ModelMap model) {
+        model.addAttribute("empleados", EmpleadoModel.listarEmpleado());
         return "adminsView/gestionEmpleados";
     }
 
@@ -90,10 +92,8 @@ public class AdminController {
         empleado.setAdministradoresByCreadorId(admin);
 
        EmpleadoModel.insertarEmpleado(empleado);
-
     }
-
-        return "adminsView/gestionEmpleados";
+        return "redirect:/Administrador/panel/empleados";
     }
 
     @GetMapping("/panel/proveedores")

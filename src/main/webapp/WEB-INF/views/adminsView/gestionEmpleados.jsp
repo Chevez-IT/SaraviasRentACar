@@ -22,42 +22,27 @@
     <div class="row">
         <div class="col-md-10">
             <a class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/Administrador/panel/empleados/new">Nuevo empleado</a>
-            <table class="table table-striped table-bordered table-hover" id="tabla">
-                <br>
-                <br>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>DUI</th>
-                    <th>Dirección</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="#" var="editorial">
-                    <tr>
-                        <td>ID</td>
-                        <td>Usuario</td>
-                        <td>Nombre</td>
-                        <td>Teléfono</td>
-                        <td>DUI</td>
-                        <td>Dirección</td>
-                        <td>Estado</td>
-                        <td>
-                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/panel/empleados/edit"/>
-                            <span class="glyphicon glyphicon-edit"></span>Editar</a>
-                            <a class="btn btn-success"
-                               href="#"> <span class="glyphicon glyphicon-refresh"></span>Cambiar estado</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            <br>
         </div>
+        <c:forEach var="elemento" items="${empleados}">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://picsum.photos/200/200?random=${elemento.empleadoId}" alt="Imagen del elemento">
+                    <div class="card-body">
+                        <h5 class="card-title">${elemento.nombresEmp} ${elemento.apellidosEmp}</h5>
+                        <p class="card-text">${elemento.empleadoId}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Teléfono: ${elemento.telefonoEmp}</li>
+                        <li class="list-group-item">Estado: ${elemento.estadoEmp}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+
     </div>
 </div>
 
