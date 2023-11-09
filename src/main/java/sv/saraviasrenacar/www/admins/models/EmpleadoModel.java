@@ -14,8 +14,6 @@ public class EmpleadoModel {
 
     static SessionFactory factory = HibernateUtil.getSessionFactory();
 
-    public EmpleadoModel(SessionFactory factory) {
-    }
 
     public static int insertarEmpleado(EmpleadosEntity empleado) {
         Session ses = factory.openSession();

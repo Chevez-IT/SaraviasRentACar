@@ -3,10 +3,7 @@ package sv.saraviasrenacar.www.admins.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sv.saraviasrenacar.www.admins.models.EmpleadoModel;
 import sv.saraviasrenacar.www.entities.EmpleadosEntity;
@@ -20,6 +17,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Controller
 @RequestMapping("Administrador")
 public class AdminController {
+
+        EmpleadoModel empleadosModel = new EmpleadoModel();
+
 	@GetMapping("/")
 	public String index() {
 		return "adminsView/adminDashboard";
@@ -45,6 +45,20 @@ public class AdminController {
     public String empleadoEdit() {
         return "adminsView/editar";
     }
+
+    @RequestMapping(value = "/panel/empleados/{id}", method = GET)
+    public String empleadoProfile(@PathVariable("id") String id, Model model) {
+        EmpleadosEntity empleado = empleadosModel.obtenerEmpleado(id);
+
+        if (empleado != null) {
+            UsuariosEntity usuario = empleado.getUsuariosByUsuarioEmpleado(); // Obtenemos el usuario asociado al empleado
+            model.addAttribute("empleado", empleado);
+            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
+        }
+
+        return "adminsView/perfil";
+    }
+
 
     @RequestMapping(value = "/panel/empleados/new", method = GET)
     public String empleadoNew(Model model) {
