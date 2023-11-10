@@ -26,7 +26,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
             </form>
-            <form action="<c:url value='/Login/create' />" method="get" class="mt-4"><button type="submit" class="btn btn-primary btn-block">Registrate</button></form>
+            <form action="<c:url value='/Login/email' />" method="get" class="mt-4"><button type="submit" class="btn btn-primary btn-block">Registrate</button></form>
+            <form action="<c:url value='/Login/createProp' />" method="get" class="mt-4"><button type="submit" class="btn btn-primary btn-block">¿Quieres ofertar un vehiculo?</button></form>
         </div>
     </div>
 </div>

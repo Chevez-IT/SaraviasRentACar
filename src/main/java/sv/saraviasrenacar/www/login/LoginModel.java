@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import sv.saraviasrenacar.www.entities.ClientesEntity;
+import sv.saraviasrenacar.www.entities.PropietariosEntity;
 import sv.saraviasrenacar.www.entities.UsuariosEntity;
 import sv.saraviasrenacar.www.tools.HibernateUtil;
 
@@ -32,8 +33,6 @@ public class LoginModel {
     }
 
 
-    public LoginModel(SessionFactory factory) {
-    }
 
     public static int insertarUsuario(UsuariosEntity usuario) {
         Session ses = factory.openSession();
@@ -53,6 +52,20 @@ public class LoginModel {
         try {
             Transaction tran = ses.beginTransaction();
             ses.save(cliente);
+            tran.commit();
+            ses.close();
+            return 1;
+        } catch (Exception e) {
+            ses.close();
+            return 0;
+        }
+    }
+
+    public static int insertarProp(PropietariosEntity propietario) {
+        Session ses = factory.openSession();
+        try {
+            Transaction tran = ses.beginTransaction();
+            ses.save(propietario);
             tran.commit();
             ses.close();
             return 1;

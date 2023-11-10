@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sv.saraviasrenacar.www.entities.ClientesEntity;
-import sv.saraviasrenacar.www.entities.RolesEntity;
-import sv.saraviasrenacar.www.entities.UsuariosEntity;
+import sv.saraviasrenacar.www.entities.*;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -73,8 +71,8 @@ public class LoginController {
 
     private JavaMailSender javaMailSender;
 
-    /*@RequestMapping(value = "/sendEmail", method = POST)
-    boolean sendEmail(@RequestParam String email) {
+    @RequestMapping(value = "/sendEmail", method = POST)
+    String sendEmail(@RequestParam String email , HttpSession ses) {
         final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
         final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
 
@@ -92,34 +90,54 @@ public class LoginController {
             }
         });
 
+        Tools tools = new Tools();
+        String codigo = String.valueOf(tools.GenerarContraseña());
         try {
+            ses.setAttribute("codigoSesion", codigo);
+            ses.setAttribute("correo", email);
             // Crear un mensaje de correo
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            message.setSubject("✨ Contraseña Generada ✨"); // Cambia el asunto del correo según tus necesidades
-
-            // Formatear el contenido del correo con guiones, asteriscos y emoticones
+            message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
             String contenidoCorreo = "¡Hola! 😊\n\n";
-            contenidoCorreo += "Tu contraseña de la cuponera ha sido generada con éxito: 🎉🔐\n\n";
-            contenidoCorreo += "************\n";
-            contenidoCorreo += "     Contraseña:      😃\n";
+            contenidoCorreo += "     Codigo de verificación:      " +codigo+ "😃\n";
             contenidoCorreo += "************\n\n";
-            contenidoCorreo += "Por favor, guarda esta contraseña de forma segura. 🔒\n\n";
-            contenidoCorreo += "¡Gracias y ten un buen día! 🌞\n";
-
+            contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+            contenidoCorreo += "¡Gracias y ten un buen día!\n";
             message.setText(contenidoCorreo); // Agrega el contenido del correo
-
             // Enviar el mensaje
             Transport.send(message);
-
-            return true; // El correo se envió con éxito
+            return "redirect:/Login/comprobar";
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // Hubo un error al enviar el correo
+            return "redirect:/Login";
         }
     }
-    */
+
+    @GetMapping("/comprobar")
+    public String comprobar() {
+        return "loginView/comprobar";
+    }
+
+    @RequestMapping(value = "/verificarCodigo", method = POST)
+    String verificarCodigo(@RequestParam String codigo, HttpSession session) {
+        // Recuperar el código almacenado en la variable de sesión
+        String codigoSesion = (String) session.getAttribute("codigoSesion");
+
+        System.out.println(codigoSesion);
+        System.out.println(codigo);
+        if (codigoSesion != null && codigoSesion.equals(codigo)) {
+            System.out.println("Exitooooo");
+            return "redirect:/Login/create"; // Redirige a la página de éxito
+        } else {
+            // El código es incorrecto, realiza la acción en caso de error
+            return "redirect:/Login/email"; // Redirige a la página de error
+        }
+    }
+
+
+
 
     @RequestMapping(value = "/create", method = GET)
     public String empleadoNew(Model model) {
@@ -129,8 +147,103 @@ public class LoginController {
         model.addAttribute("usuario", new UsuariosEntity());
         return "loginView/registrar";
     }
+
     @RequestMapping(value = "/create", method = POST)
-    public String clienteNewInsert(@ModelAttribute("cliente") ClientesEntity cliente, Model model, RedirectAttributes atributos) {
+    public String clienteNewInsert(@ModelAttribute("cliente") ClientesEntity cliente, Model model, RedirectAttributes atributos, HttpSession ses)  {
+
+        Tools tools = new Tools();
+        UsuariosEntity usuario = new UsuariosEntity();
+        RolesEntity rol = new RolesEntity();
+        String contrasenna = String.valueOf(tools.GenerarContraseña());
+        String encripted = (tools.encriptarContraseña(contrasenna));
+        String user = tools.GenerarUsername(cliente.getNombresCli(), cliente.getApellidosCli());
+        String idIniciales = tools.GenerarIdIniciales(cliente.getNombresCli(), cliente.getApellidosCli());
+        String idNRamdom = tools.GenerarIdNRandom();
+        String username = user + idNRamdom;
+        String idUser = idIniciales + idNRamdom;
+
+        String correo = (String) ses.getAttribute("correo");
+
+
+        usuario.setUsuarioId(idUser);
+        usuario.setUsername(username);
+        usuario.setCorreoUser(correo);
+        System.out.println(correo);
+        usuario.setContrasenaUser(encripted);
+        rol.setRolId("4");
+        usuario.setRolesByRolId(rol);
+        usuario.setEstadoUser("Activo");
+
+        int resultUsuario = LoginModel.insertarUsuario(usuario);
+
+        if (resultUsuario == 1){
+            EnviarCredenciales(contrasenna,username,ses);
+            cliente.setClienteId(idUser+"C");
+            cliente.setUsuariosByUsuarioCliente(usuario);
+            cliente.setFotoCli("default.png");
+            cliente.setEstadoCli("Activo");
+            LoginModel.insertarCliente(cliente);
+        }
+        return "redirect:/Login";
+    }
+
+
+
+    /*Enviar las credenciales*/
+    public void EnviarCredenciales(String contrasenna, String usuario, HttpSession ses) {
+        final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
+        final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
+        String correo = (String) ses.getAttribute("correo");
+        // Configuración de las propiedades del servidor de correo
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+        Tools tools = new Tools();
+        String codigo = String.valueOf(tools.GenerarContraseña());
+        try {
+            // Crear un mensaje de correo
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
+            String contenidoCorreo = "¡Hola! 😊\n\n";
+            contenidoCorreo += "     Su contraseña es:      " +contrasenna+ "\n";
+            contenidoCorreo += "     Su usuario es:      " +usuario+ "\n";
+            contenidoCorreo += "************\n\n";
+            contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+            contenidoCorreo += "¡Gracias y ten un buen día!\n";
+            message.setText(contenidoCorreo); // Agrega el contenido del correo
+            // Enviar el mensaje
+            Transport.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+    @RequestMapping(value = "/createProp", method = GET)
+    public String propietarioNew(Model model) {
+
+        model.addAttribute("propietario", new PropietariosEntity());
+        model.addAttribute("roles", new RolesEntity());
+        model.addAttribute("usuario", new UsuariosEntity());
+        return "loginView/propietario";
+    }
+
+
+    @RequestMapping(value = "/createProp", method = POST)
+    public String propietarioNewInsert(@ModelAttribute("propietario") PropietariosEntity propietario, Model model, RedirectAttributes atributos) {
 
         Tools tools = new Tools();
         UsuariosEntity usuario = new UsuariosEntity();
@@ -141,31 +254,31 @@ public class LoginController {
         String contrasenna = "password";
         String encripted = (tools.encriptarContraseña(contrasenna));
 
-        String user = tools.GenerarUsername(cliente.getNombresCli(), cliente.getApellidosCli());
-        String idIniciales = tools.GenerarIdIniciales(cliente.getNombresCli(), cliente.getApellidosCli());
+        String user = tools.GenerarUsername(propietario.getNombresProp(), propietario.getApellidosProp());
+        String idIniciales = tools.GenerarIdIniciales(propietario.getNombresProp(), propietario.getApellidosProp());
         String idNRamdom = tools.GenerarIdNRandom();
-        String username = user;
+        String username = user + idNRamdom;
         String idUser = idIniciales + idNRamdom;
 
         usuario.setUsuarioId(idUser);
         usuario.setUsername(username);
-        usuario.setCorreoUser(cliente.getCorreo());
+        usuario.setCorreoUser(propietario.getCorreo());
         usuario.setContrasenaUser(encripted);
         rol.setRolId("4");
         usuario.setRolesByRolId(rol);
         usuario.setEstadoUser("Activo");
 
         int resultUsuario = LoginModel.insertarUsuario(usuario);
-
         if (resultUsuario == 1){
-
-            cliente.setClienteId(idUser+"C");
-            cliente.setUsuariosByUsuarioCliente(usuario);
-            cliente.setFotoCli("default.png");
-            cliente.setEstadoCli("Pendiente");
-            LoginModel.insertarCliente(cliente);
+            EmpleadosEntity empleado = new EmpleadosEntity();
+            propietario.setPropietarioId(idUser+"P");
+            propietario.setUsuariosByUsuarioPropietario(usuario);
+            propietario.setFotoProp("default.png");
+            propietario.setEstadoProp("Activo");
+            empleado.setEmpleadoId("CR421E");
+            propietario.setEmpleadosByGestorId(empleado);
+            LoginModel.insertarProp(propietario);
         }
         return "redirect:/Login";
     }
-
 }
