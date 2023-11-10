@@ -23,6 +23,7 @@
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/clientes">Clientes</a>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/empleados">Empleados</a>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/proveedores">Proveedores</a>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/admin">Administradores</a>
                     </div>
                 </li>
             </ul>

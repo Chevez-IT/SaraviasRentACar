@@ -106,4 +106,13 @@ public class AdministradoresEntity implements Serializable {
 	public void setEmpleadosByAdministradorId(Collection<EmpleadosEntity> empleadosByAdministradorId) {
 		this.empleadosByAdministradorId = empleadosByAdministradorId;
 	}
+
+	String correoAdmin;
+	public String getCorreoAdmin() {
+		return correoAdmin;
+	}
+
+	public void setCorreoAdmin(String correoAdmin) {
+		this.correoAdmin = correoAdmin;
+	}
 }

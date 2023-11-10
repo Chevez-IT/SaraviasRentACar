@@ -12,6 +12,7 @@ import sv.saraviasrenacar.www.entities.RolesEntity;
 import sv.saraviasrenacar.www.entities.UsuariosEntity;
 import sv.saraviasrenacar.www.entities.AdministradoresEntity;
 import sv.saraviasrenacar.www.admins.models.UsuarioModel;
+import sv.saraviasrenacar.www.admins.models.AdminModel;
 import sv.saraviasrenacar.www.tools.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -21,7 +22,8 @@ public class AdminController {
 
         EmpleadoModel empleadosModel = new EmpleadoModel();
         UsuarioModel usuarioModel = new UsuarioModel();
-	@GetMapping("/")
+        AdminModel adminModel = new AdminModel();
+    @GetMapping("/")
 	public String index() {
 		return "adminsView/adminDashboard";
 	}
@@ -133,6 +135,93 @@ public class AdminController {
     @GetMapping("/panel/proveedores")
     public String proveedores() {
         return "adminsView/gestionProveedores";
+    }
+
+    @RequestMapping(value = "/panel/admin", method = GET)
+    public String administrador(ModelMap model) {
+        model.addAttribute("admin", adminModel.listarAdministrador());
+        return "adminsView/gestionAdministrador";
+    }
+
+    @RequestMapping(value = "/panel/admin/new", method = GET)
+    public String adminNew(Model model) {
+        model.addAttribute("admin", new AdministradoresEntity());
+        model.addAttribute("roles", new RolesEntity());
+        model.addAttribute("usuario", new UsuariosEntity());
+
+        return "adminsView/nuevoAdmin";
+
+    }
+
+    @RequestMapping(value = "/panel/admin/create", method = POST)
+    public String adminNewInsert(@ModelAttribute("admin") AdministradoresEntity administrador, Model model, RedirectAttributes atributos) {
+
+        Tools tools = new Tools();
+        UsuariosEntity usuario = new UsuariosEntity();
+        RolesEntity rol = new RolesEntity();
+
+        String contrasenna = String.valueOf(tools.GenerarContraseña());
+        String user = tools.GenerarUsername(administrador.getNombresAdmin(),administrador.getApellidosAdmin());
+        String idIniciales = tools.GenerarIdIniciales(administrador.getNombresAdmin(),administrador.getApellidosAdmin());
+        String idNRamdom = tools.GenerarIdNRandom();
+        String username = user + idNRamdom;
+        String idUser = idIniciales + idNRamdom;
+
+        System.out.println("Correo:"+ administrador.getCorreoAdmin());
+
+        usuario.setUsuarioId(idUser);
+        usuario.setUsername(username);
+        usuario.setCorreoUser(administrador.getCorreoAdmin());
+        usuario.setContrasenaUser(contrasenna);
+        rol.setRolId("2");
+        usuario.setRolesByRolId(rol);
+        usuario.setEstadoUser("Activo");
+
+        int resultUsuario = UsuarioModel.insertarUsuario(usuario);
+
+        if (resultUsuario == 1){
+
+            administrador.setEstadoAdmin(idUser+"A");
+            administrador.setUsuariosByUsuarioAdmin(usuario);
+            administrador.setFotoAdmin("default.png");
+            administrador.setNombresAdmin(administrador.getNombresAdmin());
+            administrador.setApellidosAdmin(administrador.getApellidosAdmin());
+            administrador.setTelefonoAdmin(administrador.getTelefonoAdmin());
+            administrador.setEstadoAdmin("Activo");
+
+            AdminModel.insertarAdministrador(administrador);
+        }
+        return "redirect:/Administrador/panel/admin";
+    }
+
+    @RequestMapping(value = "/panel/admin/{id}", method = GET)
+    public String adminProfile(@PathVariable("id") String id, Model model) {
+        AdministradoresEntity admin = adminModel.obtenerAdministrador(id);
+
+        if (admin != null) {
+            UsuariosEntity usuario = admin.getUsuariosByUsuarioAdmin(); // Obtenemos el usuario asociado al empleado
+            model.addAttribute("admin", admin);
+            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
+        }
+        return "adminsView/perfilAdmin";
+    }
+
+    @RequestMapping(value = "/panel/admin/desactivar", method = POST)
+    public String desactivarAdmin(Model model, @RequestParam("usuarioId") String usuarioId,
+                             @RequestParam("adminId") String adminId) {
+        String nuevoEstado = "Inactivo";
+        adminModel.cambiarEstadoAdministrador(adminId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/admin";
+    }
+
+    @RequestMapping(value = "/panel/admin/activar", method = POST)
+    public String activarAdmin(Model model, @RequestParam("usuarioId") String usuarioId,
+                          @RequestParam("adminId") String adminId) {
+        String nuevoEstado = "Activo";
+        adminModel.cambiarEstadoAdministrador(adminId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/admin";
     }
 
 }
