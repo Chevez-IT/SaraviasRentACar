@@ -44,13 +44,17 @@
 
                 <c:choose>
                     <c:when test="${usuario.estadoUser eq 'Activo'}">
-                        <form action="${pageContext.request.contextPath}/EmpleadoCLI/clientep/desactivar?usuarioId=${usuario.usuarioId}&clienteId=${cliente.clienteId}" method="get">
-                            <button type="submit" class="btn btn-danger">Desactivar Cliente</button>
+                        <form action="desactivar" method="post">
+                            <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                            <input type="hidden" name="clienteId" value="${cliente.clienteId}">
+                            <button type="submit" class="btn btn-success">Desactivar</button>
                         </form>
                     </c:when>
                     <c:otherwise>
-                        <form action="${pageContext.request.contextPath}/EmpleadoCLI/clientep/activar?usuarioId=${usuario.usuarioId}&clienteId=${cliente.clienteId}" method="get">
-                            <button type="submit" class="btn btn-danger">Activar Cliente</button>
+                        <form action="activar" method="post">
+                            <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                            <input type="hidden" name="clienteId" value="${cliente.clienteId}">
+                            <button type="submit" class="btn btn-success">Activar</button>
                         </form>
                     </c:otherwise>
                 </c:choose>

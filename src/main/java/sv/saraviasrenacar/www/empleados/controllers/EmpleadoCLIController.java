@@ -61,37 +61,22 @@ public class EmpleadoCLIController {
 		return "empleadosView/ClientesP";
 	}
 
-	@RequestMapping (value = "/activar", method = GET)
+	@RequestMapping(value = "/clientep/activar", method = POST)
 	public String activarCliente(Model model, @RequestParam("usuarioId") String usuarioId,
-								 @RequestParam("clienteId") String clienteId) {
-		String estado = "Activo";
-
-		model.addAttribute("Activar", empleadoCLIModel.cambiarEstadoCliente(clienteId,estado));
-		model.addAttribute("Activar", empleadoUSUModel.cambiarEstadoUsuario(usuarioId,estado));
-
-		return "empleadosView/ClientesP";
-
+						  @RequestParam("clienteId") String clienteId) {
+		String nuevoEstado = "Activo";
+		empleadoCLIModel.cambiarEstadoCliente(clienteId, nuevoEstado);
+		empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+		return "redirect:/EmpleadoCLI/listcli";
 	}
 
-
-	@RequestMapping (value = "/desactivar", method = GET)
+	@RequestMapping(value = "/clientep/desactivar", method = POST)
 	public String desactivarCliente(Model model, @RequestParam("usuarioId") String usuarioId,
-								 @RequestParam("clienteId") String clienteId) {
+						  @RequestParam("clienteId") String clienteId) {
 		String nuevoEstado = "Inactivo";
-
-		int resultadoCliente = empleadoCLIModel.cambiarEstadoCliente(clienteId, nuevoEstado);
-		int resultadoUsuario = empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
-
-		// Verifica los resultados si es necesario
-		if (resultadoCliente == 1 && resultadoUsuario == 1) {
-			model.addAttribute("Desactivar", "Estado cambiado con éxito");
-			model.addAttribute("Perfil", empleadoCLIModel.obtenerCliente(clienteId));
-		} else {
-			model.addAttribute("Desactivar", "Hubo un error al cambiar el estado");
-			model.addAttribute("Perfil", empleadoCLIModel.obtenerCliente(clienteId));
-		}
-
-		return "empleadosView/ClientesP";
+		empleadoCLIModel.cambiarEstadoCliente(clienteId, nuevoEstado);
+		empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+		return "redirect:/EmpleadoCLI/listcli";
 	}
 
 }

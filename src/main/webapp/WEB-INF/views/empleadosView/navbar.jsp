@@ -30,8 +30,9 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoCLI/listcli">Clientes</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoPRO/listpro">Empleados</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listvend">Ventas</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listvend">Arquileres</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEH/listveh">Vehiculos</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listven">Ventas</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoARQ/listarq">Arquileres</a>
           </div>
         </li>
       </ul>

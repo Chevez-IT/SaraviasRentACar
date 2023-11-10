@@ -18,7 +18,7 @@
 <div class="container">
     <h3 class="mt-4">Gestión de Ventas</h3>
     <div class="row mt-3">
-        <form method="post" action="${pageContext.request.contextPath}/EmpleadoVEN/listvend">
+        <form method="post" action="${pageContext.request.contextPath}/EmpleadoVEN/listven">
             <label for="estadoVenta">Filtrar por estado:</label>
             <select id="estadoVenta" name="estadoVenta" class="form-select">
                 <option selected="true" disabled="disabled">${estadoVenta}</option>
@@ -26,7 +26,7 @@
                 <option value="Rechazado">Rechazado</option>
                 <option value="Vendido">Vendido</option>
                 <option value="Pendiente">Pendiente</option>
-                <option value="Ofertada">Ofertado</option>
+                <option value="Ofertado">Ofertado</option>
             </select>
             <button type="submit" class="btn btn-primary">Filtrar</button>
         </form>
@@ -37,24 +37,115 @@
         <thead>
         <tr>
             <th>Id Venta</th>
+            <th>Id Vehiculo</th>
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>Precio</th>
+
+
+
+            <c:choose>
+                <c:when test="${estadoVenta eq 'Pendiente' || estadoVenta eq 'Vendido'}">
+                    <th>Comprador</th>
+                </c:when>
+                <c:when test="${estadoVenta eq 'Ofertado'}">
+                    <th>Comprador</th>
+                </c:when>
+            <c:otherwise>
+            </c:otherwise>
+            </c:choose>
+
             <th>Fecha Compra</th>
+            <th>Gestor</th>
             <th>Estado</th>
             <th>Fecha creacion</th>
+
+
+            <c:choose>
+                <c:when test="${estadoVenta eq 'Pendiente' || estadoVenta eq 'Ofertado'}">
+                    <th>Operaciones</th>
+                </c:when>
+
+                <c:otherwise>
+                </c:otherwise>
+            </c:choose>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${listaVentasDIS}" var="ventas">
+        <c:forEach items="${listaVentaDIS}" var="ventas">
             <tr>
                 <td>${ventas.ventaId}</td>
+                <td>${ventas.vehiculosByVehiculoId.vehiculoId}</td>
                 <td>${ventas.tituloVenta}</td>
                 <td>${ventas.descripcionVenta}</td>
                 <td>${ventas.precioVenta}</td>
+
+
+
+                <c:choose>
+                    <c:when test="${ventas.estadoVenta eq 'Pendiente' || ventas.estadoVenta eq 'Vendido'}">
+                        <td>${ventas.clientesByCompradorVenta.clienteId}</td>
+                    </c:when>
+                    <c:when test="${ventas.estadoVenta eq 'Ofertado'}">
+                        <td>${ventas.clientesByCompradorVenta.clienteId}</td>
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
                 <td>${ventas.fechaCompraVenta}</td>
+                <td>${ventas.empleadosByGestorId.empleadoId}</td>
                 <td>${ventas.estadoVenta}</td>
                 <td>${ventas.fechaCreacionVenta}</td>
+
+
+                <c:choose>
+                    <c:when test="${estadoVenta eq 'Pendiente'}">
+                        <td>
+                            <form action="aprobar" method="post">
+                                <input type="hidden" name="ventaId" value="${ventas.ventaId}">
+                                <button type="submit" class="btn btn-success">Aprobar</button>
+                            </form>
+
+                            <form action="rechazar" method="post">
+                                <input type="hidden" name="ventaId" value="${ventas.ventaId}">
+                                <button type="submit" class="btn btn-success">Rechazar</button>
+                            </form>
+
+                            <form action="activar" method="post">
+                                <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                                <button type="submit" class="btn btn-success">Chat</button>
+                            </form>
+                        </td>
+                    </c:when>
+
+                    <c:when test="${estadoVenta eq 'Ofertado'}">
+                        <td>
+
+                            <form action="vender" method="post">
+                                <input type="hidden" name="ventaId" value="${ventas.ventaId}">
+                                <button type="submit" class="btn btn-success">Vender</button>
+                            </form>
+
+                            <form action="rechazardis" method="post">
+                                <input type="hidden" name="ventaId" value="${ventas.ventaId}">
+                                <button type="submit" class="btn btn-success">Rechazar</button>
+                            </form>
+
+                            <form action="activar" method="post">
+                                <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                                <button type="submit" class="btn btn-success">Chat</button>
+                            </form>
+
+                        </td>
+                    </c:when>
+
+
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
+
             </tr>
         </c:forEach>
         </tbody>
