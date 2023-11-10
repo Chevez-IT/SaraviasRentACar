@@ -43,15 +43,15 @@ public class PropietarioController {
 
 			modelMap.addAttribute("alquileresEnEspera", alquileresModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
 
-			/*List<VentasEntity> ventas = ventasModel.listarPorPropietarioYEstado(idPropietario, "En espera");
+			List<VentasEntity> ventas = ventasModel.listarPorPropietarioYEstado(idPropietario, "En espera");
 			int nVentas = ventas.size();
 			modelMap.addAttribute("ventasEnEspera", ventasModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
 			modelMap.addAttribute("nVentasEnEspera", nVentas);
 
 			List<VehiculosEntity> vehiculos = vehiculosModel.listarPorPropietarioYEstado(idPropietario, "En espera");
-			int nVehiculos = vehiculos.size()
+			int nVehiculos = vehiculos.size();
 			modelMap.addAttribute("vehiculosEnEspera", vehiculosModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
-			modelMap.addAttribute("nVehiculosEnEspera", nVehiculos);*/
+			modelMap.addAttribute("nVehiculosEnEspera", nVehiculos);
 
 			return "propietariosView/propietarioDashboard";
 	}

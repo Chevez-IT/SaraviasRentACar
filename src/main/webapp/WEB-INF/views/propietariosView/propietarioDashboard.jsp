@@ -33,7 +33,7 @@
                                         <h4 class="fw-bold text-white">Pendientes</h4>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
-                                        <h1 class="fw-bold text-white">${nAlquileresPendientes}</h1>
+                                        <h1 class="fw-bold text-white">${nVentasEnEspera}</h1>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-receipt fw-bold fs-1 text-warning"></i>
