@@ -6,13 +6,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sv.saraviasrenacar.www.admins.models.ClientesModel;
 import sv.saraviasrenacar.www.admins.models.EmpleadoModel;
 import sv.saraviasrenacar.www.entities.EmpleadosEntity;
 import sv.saraviasrenacar.www.entities.RolesEntity;
 import sv.saraviasrenacar.www.entities.UsuariosEntity;
 import sv.saraviasrenacar.www.entities.AdministradoresEntity;
+import sv.saraviasrenacar.www.entities.ClientesEntity;
 import sv.saraviasrenacar.www.admins.models.UsuarioModel;
 import sv.saraviasrenacar.www.admins.models.AdminModel;
+import sv.saraviasrenacar.www.admins.models.ClientesModel;
 import sv.saraviasrenacar.www.tools.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -23,6 +26,7 @@ public class AdminController {
         EmpleadoModel empleadosModel = new EmpleadoModel();
         UsuarioModel usuarioModel = new UsuarioModel();
         AdminModel adminModel = new AdminModel();
+        ClientesModel clientesModel = new ClientesModel();
     @GetMapping("/")
 	public String index() {
 		return "adminsView/adminDashboard";
@@ -33,9 +37,40 @@ public class AdminController {
         return "adminsView/adminDashboard";
     }
 
-    @GetMapping("/panel/clientes")
-    public String clientes() {
+    @RequestMapping(value = "/panel/clientes", method = GET)
+    public String clientes(ModelMap model) {
+        model.addAttribute("clientes", clientesModel.listarClientes());
         return "adminsView/gestionClientes";
+    }
+
+    @RequestMapping(value = "/panel/clientes/{id}", method = GET)
+    public String clientesProfile(@PathVariable("id") String id, Model model) {
+        ClientesEntity cliente = clientesModel.obtenerCliente(id);
+
+        if (cliente != null) {
+            UsuariosEntity usuario = cliente.getUsuariosByUsuarioCliente(); // Obtenemos el usuario asociado al empleado
+            model.addAttribute("cliente", cliente);
+            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
+        }
+        return "adminsView/perfilClientes";
+    }
+
+    @RequestMapping(value = "/panel/clientes/desactivar", method = POST)
+    public String desactivarCliente(Model model, @RequestParam("usuarioId") String usuarioId,
+                                  @RequestParam("clienteId") String clienteId) {
+        String nuevoEstado = "Inactivo";
+        clientesModel.cambiarEstadoCliente(clienteId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/clientes";
+    }
+
+    @RequestMapping(value = "/panel/clientes/activar", method = POST)
+    public String activarCLiente(Model model, @RequestParam("usuarioId") String usuarioId,
+                               @RequestParam("clienteId") String clienteId) {
+        String nuevoEstado = "Activo";
+        clientesModel.cambiarEstadoCliente(clienteId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/clientes";
     }
 
     @RequestMapping(value = "/panel/empleados", method = GET)
