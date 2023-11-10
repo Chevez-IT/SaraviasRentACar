@@ -31,6 +31,13 @@
             <option value="Inactivo">Inactivo</option>
         </select>
         <button type="submit" class="btn btn-primary">Filtrar</button>
+        <!-- Formulario para búsqueda por ID -->
+        <form method="post" action="${pageContext.request.contextPath}/EmpleadoCLI/buscarPorId">
+            <label for="idCliente">Buscar por ID:</label>
+            <input type="text" id="idCliente" name="idCliente" class="form-control" placeholder="Ingrese ID del cliente">
+            <button type="submit" class="btn btn-primary">Buscar por ID</button>
+        </form>
+
     </form>
     <c:forEach var="elemento" items="${listaCliente}" varStatus="loop">
         <c:if test="${loop.index % 5 == 0}">
