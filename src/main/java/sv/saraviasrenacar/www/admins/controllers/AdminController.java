@@ -11,12 +11,17 @@ import sv.saraviasrenacar.www.admins.models.EmpleadoModel;
 import sv.saraviasrenacar.www.entities.EmpleadosEntity;
 import sv.saraviasrenacar.www.entities.RolesEntity;
 import sv.saraviasrenacar.www.entities.UsuariosEntity;
+import sv.saraviasrenacar.www.entities.PropietariosEntity;
 import sv.saraviasrenacar.www.entities.AdministradoresEntity;
 import sv.saraviasrenacar.www.entities.ClientesEntity;
 import sv.saraviasrenacar.www.admins.models.UsuarioModel;
 import sv.saraviasrenacar.www.admins.models.AdminModel;
-import sv.saraviasrenacar.www.admins.models.ClientesModel;
+import sv.saraviasrenacar.www.admins.models.PropietariosModel;
+
 import sv.saraviasrenacar.www.tools.*;
+
+import java.security.Provider;
+
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
@@ -27,6 +32,7 @@ public class AdminController {
         UsuarioModel usuarioModel = new UsuarioModel();
         AdminModel adminModel = new AdminModel();
         ClientesModel clientesModel = new ClientesModel();
+        PropietariosModel propietariosModel = new PropietariosModel();
     @GetMapping("/")
 	public String index() {
 		return "adminsView/adminDashboard";
@@ -167,10 +173,43 @@ public class AdminController {
     }
 
 
-    @GetMapping("/panel/proveedores")
-    public String proveedores() {
+    @RequestMapping(value = "/panel/proveedores", method = GET)
+    public String proveedores(ModelMap model) {
+        model.addAttribute("proveedores", propietariosModel.listarPropietarios());
         return "adminsView/gestionProveedores";
     }
+
+    @RequestMapping(value = "/panel/proveedores/{id}", method = GET)
+    public String proveedoresProfile(@PathVariable("id") String id, Model model) {
+        PropietariosEntity propietario = propietariosModel.obtenerPropietarios(id);
+
+        if (propietario != null) {
+            UsuariosEntity usuario = propietario.getUsuariosByUsuarioPropietario(); // Obtenemos el usuario asociado al empleado
+            model.addAttribute("proveedor", propietario);
+            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
+        }
+        return "adminsView/perfilProveedor";
+    }
+
+    @RequestMapping(value = "/panel/proveedores/desactivar", method = POST)
+    public String desactivarProveedores(Model model, @RequestParam("usuarioId") String usuarioId,
+                                    @RequestParam("propietarioId") String propietarioId) {
+        String nuevoEstado = "Inactivo";
+        propietariosModel.cambiarEstadoPropietario(propietarioId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/proveedores";
+    }
+
+    @RequestMapping(value = "/panel/proveedores/activar", method = POST)
+    public String activarProveedores(Model model, @RequestParam("usuarioId") String usuarioId,
+                                 @RequestParam("propietarioId") String propietarioId) {
+        String nuevoEstado = "Activo";
+        propietariosModel.cambiarEstadoPropietario(propietarioId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/proveedores";
+    }
+
+
 
     @RequestMapping(value = "/panel/admin", method = GET)
     public String administrador(ModelMap model) {
