@@ -25,6 +25,6 @@ public class MainController {
 	// Método de ejemplo para obtener el rol (deberías implementar esta lógica)
 	private int obtenerRol() {
 		// Supongamos que aquí tienes la lógica para obtener el rol.
-		return 2; // Valor de ejemplo
+		return 1; // Valor de ejemplo
 	}
 }
