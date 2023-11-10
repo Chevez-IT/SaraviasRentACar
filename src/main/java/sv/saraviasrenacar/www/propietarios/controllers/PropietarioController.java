@@ -2,19 +2,58 @@ package sv.saraviasrenacar.www.propietarios.controllers;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
+import sv.saraviasrenacar.www.entities.ArquileresEntity;
+import sv.saraviasrenacar.www.entities.VehiculosEntity;
+import sv.saraviasrenacar.www.entities.VentasEntity;
+import sv.saraviasrenacar.www.propietarios.models.AlquileresModel;
+import sv.saraviasrenacar.www.propietarios.models.VehiculosModel;
+import sv.saraviasrenacar.www.propietarios.models.VentasModel;
+
+import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 @RequestMapping("Propietario")
 public class PropietarioController {
-//	Ruta Inicial
-	@GetMapping("/")
-	public String index() {
-		return "propietariosView/propietarioDashboard";
+	int rolId = 1;
+	String idUsuario ="";
+	String idPropietario ="";
+
+
+	//Controlamos el acceso a las rutas
+	public boolean verificarAcceso(Integer rolId) {
+		return rolId != null && rolId.equals(1);
+	}
+
+	AlquileresModel alquileresModel = new AlquileresModel();
+	VentasModel ventasModel = new VentasModel();
+
+	VehiculosModel vehiculosModel = new VehiculosModel();
+
+	//	Ruta Inicial
+	@RequestMapping(value = "/", method = GET)
+	public String index(ModelMap modelMap) {
+
+			modelMap.addAttribute("alquileresEnEspera", alquileresModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
+
+			/*List<VentasEntity> ventas = ventasModel.listarPorPropietarioYEstado(idPropietario, "En espera");
+			int nVentas = ventas.size();
+			modelMap.addAttribute("ventasEnEspera", ventasModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
+			modelMap.addAttribute("nVentasEnEspera", nVentas);
+
+			List<VehiculosEntity> vehiculos = vehiculosModel.listarPorPropietarioYEstado(idPropietario, "En espera");
+			int nVehiculos = vehiculos.size()
+			modelMap.addAttribute("vehiculosEnEspera", vehiculosModel.listarPorPropietarioYEstado(idPropietario, "En espera"));
+			modelMap.addAttribute("nVehiculosEnEspera", nVehiculos);*/
+
+			return "propietariosView/propietarioDashboard";
 	}
 
 //	Rutas para la gestion de vehiculos

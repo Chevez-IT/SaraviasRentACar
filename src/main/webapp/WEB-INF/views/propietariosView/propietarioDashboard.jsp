@@ -33,7 +33,7 @@
                                         <h4 class="fw-bold text-white">Pendientes</h4>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
-                                        <h1 class="fw-bold text-white">1</h1>
+                                        <h1 class="fw-bold text-white">${nAlquileresPendientes}</h1>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-receipt fw-bold fs-1 text-warning"></i>
@@ -185,30 +185,20 @@
                     <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Estado</th>
                     </tr>
                     </thead>
-                    <tbody class="table-group-divider">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                    </tbody>
+                    <c:forEach items="${alquileresEnEspera}" var="alquiler" >
+                        <tr>
+                            <th scope="row">${alquiler}</th>
+                            <td>${alquiler.fecha}</td>
+                            <td>${alquiler.vehiculo.modelo} ${alquiler.vehiculo.marca}</td>
+                            <td>${alquiler.estadoArquiler}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
 
