@@ -15,13 +15,13 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-image: url("${pageContext.request.contextPath}/resources/background2Log.jpg");
             text-align: center;
             margin: 50px;
         }
 
         h2 {
-            color: #333;
+            color: white;
         }
 
         form {

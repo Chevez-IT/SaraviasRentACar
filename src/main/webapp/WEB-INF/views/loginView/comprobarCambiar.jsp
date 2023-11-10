@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -15,13 +15,13 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-image: url("${pageContext.request.contextPath}/resources/background2Log.jpg");
             text-align: center;
             margin: 50px;
         }
 
         h2 {
-            color: #333;
+            color: white;
         }
 
         form {
@@ -64,7 +64,7 @@
 </head>
 <body>
 
-<h2>Ingrese el Código de Verificación para cambiar la contraseña</h2>
+<h2>Ingrese el Código de Verificación para cambiar la contraseña, la nueva contraseña sera enviada a su correo.</h2>
 
 <form action="<c:url value='/Login/verificarCodigoCambiar' />" method="post">
     <label for="codigo">Código:</label>
