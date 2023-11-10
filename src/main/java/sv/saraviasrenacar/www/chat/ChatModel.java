@@ -64,14 +64,6 @@ public class ChatModel {
 
             session.getTransaction().commit();
 
-            final Logger logger = Logger.getLogger(ChatModel.class.getName());
-
-            for (MensajesEntity mensaje : mensajes) {
-                logger.info("Mensaje: " + mensaje.getMensaje() + ", Fecha: " + mensaje.getFechaCreacion());
-            }
-
-
-
             return mensajes;
         } catch (Exception e) {
             e.printStackTrace();

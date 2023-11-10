@@ -59,6 +59,8 @@ public class LoginController {
         return rolValue;
     }
 
+
+    /*Registrarse como cliente*/
     @GetMapping("nuevo")
     public String clientes() {
         return "loginView/nuevo";
@@ -101,7 +103,7 @@ public class LoginController {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
             String contenidoCorreo = "¡Hola! 😊\n\n";
-            contenidoCorreo += "     Codigo de verificación:      " +codigo+ "😃\n";
+            contenidoCorreo += "     Codigo de verificación:      " +codigo+ "\n";
             contenidoCorreo += "************\n\n";
             contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
             contenidoCorreo += "¡Gracias y ten un buen día!\n";
@@ -117,8 +119,11 @@ public class LoginController {
 
     @GetMapping("/comprobar")
     public String comprobar() {
+
         return "loginView/comprobar";
     }
+
+
 
     @RequestMapping(value = "/verificarCodigo", method = POST)
     String verificarCodigo(@RequestParam String codigo, HttpSession session) {
@@ -231,6 +236,81 @@ public class LoginController {
 
     }
 
+    /*Registrarse como cliente*/
+
+    /*Registrarse como propietario*/
+
+    @GetMapping("/emailProp")
+    public String emailProp() {
+        return "loginView/nuevoProp";
+    }
+
+
+    @RequestMapping(value = "/sendEmailProp", method = POST)
+    String sendEmailProp(@RequestParam String email , HttpSession ses) {
+        final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
+        final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
+
+        // Configuración de las propiedades del servidor de correo
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+
+        Tools tools = new Tools();
+        String codigo = String.valueOf(tools.GenerarContraseña());
+        try {
+            ses.setAttribute("codigoSesion", codigo);
+            ses.setAttribute("correo", email);
+            // Crear un mensaje de correo
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
+            String contenidoCorreo = "¡Hola! 😊\n\n";
+            contenidoCorreo += "     Codigo de verificación:      " +codigo+ "\n";
+            contenidoCorreo += "************\n\n";
+            contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+            contenidoCorreo += "¡Gracias y ten un buen día!\n";
+            message.setText(contenidoCorreo); // Agrega el contenido del correo
+            // Enviar el mensaje
+            Transport.send(message);
+            return "redirect:/Login/comprobarProp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/Login";
+        }
+    }
+
+    @GetMapping("/comprobarProp")
+    public String comprobarProp() {
+
+        return "loginView/comprobarProp";
+    }
+
+    @RequestMapping(value = "/verificarCodigoProp", method = POST)
+    String verificarCodigoProp(@RequestParam String codigo, HttpSession session) {
+        // Recuperar el código almacenado en la variable de sesión
+        String codigoSesion = (String) session.getAttribute("codigoSesion");
+
+        System.out.println(codigoSesion);
+        System.out.println(codigo);
+        if (codigoSesion != null && codigoSesion.equals(codigo)) {
+            System.out.println("Exitooooo");
+            return "redirect:/Login/createProp"; // Redirige a la página de éxito
+        } else {
+            // El código es incorrecto, realiza la acción en caso de error
+            return "redirect:/Login/emailProp"; // Redirige a la página de error
+        }
+    }
 
     @RequestMapping(value = "/createProp", method = GET)
     public String propietarioNew(Model model) {
@@ -242,18 +322,16 @@ public class LoginController {
     }
 
 
+
     @RequestMapping(value = "/createProp", method = POST)
-    public String propietarioNewInsert(@ModelAttribute("propietario") PropietariosEntity propietario, Model model, RedirectAttributes atributos) {
+    public String propietarioNewInsert(@ModelAttribute("propietario") PropietariosEntity propietario, Model model, RedirectAttributes atributos, HttpSession ses) {
 
         Tools tools = new Tools();
         UsuariosEntity usuario = new UsuariosEntity();
         RolesEntity rol = new RolesEntity();
-
-        /* contrasenna = String.valueOf(tools.GenerarContraseña());*/
-
-        String contrasenna = "password";
+        String contrasenna = String.valueOf(tools.GenerarContraseña());
         String encripted = (tools.encriptarContraseña(contrasenna));
-
+        String correo = (String) ses.getAttribute("correo");
         String user = tools.GenerarUsername(propietario.getNombresProp(), propietario.getApellidosProp());
         String idIniciales = tools.GenerarIdIniciales(propietario.getNombresProp(), propietario.getApellidosProp());
         String idNRamdom = tools.GenerarIdNRandom();
@@ -262,14 +340,15 @@ public class LoginController {
 
         usuario.setUsuarioId(idUser);
         usuario.setUsername(username);
-        usuario.setCorreoUser(propietario.getCorreo());
+        usuario.setCorreoUser(correo);
         usuario.setContrasenaUser(encripted);
-        rol.setRolId("4");
+        rol.setRolId("1");
         usuario.setRolesByRolId(rol);
         usuario.setEstadoUser("Activo");
 
         int resultUsuario = LoginModel.insertarUsuario(usuario);
         if (resultUsuario == 1){
+            EnviarCredenciales(contrasenna,username,ses);
             EmpleadosEntity empleado = new EmpleadosEntity();
             propietario.setPropietarioId(idUser+"P");
             propietario.setUsuariosByUsuarioPropietario(usuario);
@@ -280,5 +359,128 @@ public class LoginController {
             LoginModel.insertarProp(propietario);
         }
         return "redirect:/Login";
+    }
+    /*Registrarse como propietario*/
+
+
+    /*Olvide mi contraseña*/
+    /*Redirecciono a la vista para ingresar el correo*/
+
+    @RequestMapping(value = "/olvido", method = GET)
+    public String olvido(Model model) {
+        model.addAttribute("usuario", new UsuariosEntity());
+        return "loginView/cambiarcontra";
+    }
+
+    @RequestMapping(value = "/cambiarComprobación", method = POST)
+    String cambiarComprobación(@RequestParam String email , HttpSession ses) {
+        final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
+        final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
+
+        // Configuración de las propiedades del servidor de correo
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+
+        Tools tools = new Tools();
+        String codigo = String.valueOf(tools.GenerarContraseña());
+        try {
+            ses.setAttribute("codigoSesion", codigo);
+            ses.setAttribute("correo", email);
+            // Crear un mensaje de correo
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
+            String contenidoCorreo = "¡Hola! 😊\n\n";
+            contenidoCorreo += "     Codigo de verificación:      " +codigo+ "\n";
+            contenidoCorreo += "************\n\n";
+            contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+            contenidoCorreo += "¡Gracias y ten un buen día!\n";
+            message.setText(contenidoCorreo); // Agrega el contenido del correo
+            // Enviar el mensaje
+            Transport.send(message);
+            return "redirect:/Login/comprobarCambiar";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/Login";
+        }
+    }
+
+    @GetMapping("/comprobarCambiar")
+    public String comprobarCambiar() {
+
+        return "loginView/comprobarCambiar";
+    }
+
+    @RequestMapping(value = "/verificarCodigoCambiar", method = POST)
+    String verificarCodigoCambiar(@RequestParam String codigo, HttpSession session,HttpSession ses, Model model) {
+        // Recuperar el código almacenado en la variable de sesión
+        String codigoSesion = (String) session.getAttribute("codigoSesion");
+        model.addAttribute("usuario", new UsuariosEntity());
+        UsuariosEntity usuario = new UsuariosEntity();
+        System.out.println(codigoSesion);
+        System.out.println(codigo);
+        if (codigoSesion != null && codigoSesion.equals(codigo)) {
+
+            Tools tools = new Tools();
+
+            String correo = (String) ses.getAttribute("correo");
+            String contraseña = String.valueOf(tools.GenerarContraseña());
+            String encrypted = tools.encriptarContraseña(contraseña);
+            EnviarCredencialesCambio(contraseña,ses);
+            usuario.setContrasenaUser(encrypted);
+            LoginModel.updateCont(usuario,correo);
+            return "redirect:/Login"; // Redirige a la página de éxito
+        } else {
+            // El código es incorrecto, realiza la acción en caso de error
+            return "redirect:/Login"; // Redirige a la página de error
+        }
+    }
+
+    public void EnviarCredencialesCambio(String contrasenna, HttpSession ses) {
+        final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
+        final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
+        String correo = (String) ses.getAttribute("correo");
+        // Configuración de las propiedades del servidor de correo
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+        try {
+            // Crear un mensaje de correo
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
+            String contenidoCorreo = "¡Hola! 😊\n\n";
+            contenidoCorreo += "     Su contraseña es:      " + contrasenna + "\n";
+            contenidoCorreo += "************\n\n";
+            contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+            contenidoCorreo += "¡Gracias y ten un buen día!\n";
+            message.setText(contenidoCorreo); // Agrega el contenido del correo
+            // Enviar el mensaje
+            Transport.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 }

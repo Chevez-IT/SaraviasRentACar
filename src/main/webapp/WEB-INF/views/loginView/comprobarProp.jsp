@@ -66,7 +66,7 @@
 
 <h2>Ingrese el Código de Verificación</h2>
 
-<form action="<c:url value='verificarCodigo' />" method="post">
+<form action="<c:url value='verificarCodigoProp' />" method="post">
     <label for="codigo">Código:</label>
     <input type="text" id="codigo" name="codigo" required>
     <br>

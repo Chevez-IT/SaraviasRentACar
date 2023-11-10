@@ -64,9 +64,9 @@
 </head>
 <body>
 
-<h2>Ingrese el Código de Verificación</h2>
+<h2>Ingrese el Código de Verificación para cambiar la contraseña</h2>
 
-<form action="<c:url value='verificarCodigo' />" method="post">
+<form action="<c:url value='/Login/verificarCodigoCambiar' />" method="post">
     <label for="codigo">Código:</label>
     <input type="text" id="codigo" name="codigo" required>
     <br>

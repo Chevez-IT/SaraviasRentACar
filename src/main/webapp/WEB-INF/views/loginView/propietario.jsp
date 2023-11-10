@@ -12,12 +12,12 @@
 <html>
 <html>
 <head>
-    <title>Nuevo empleado</title>
+    <title>Nuevo propietario</title>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><body>
 <div class="row">
-    <h3>Nuevo empleado</h3>
+    <h3>Se registrara como propietario</h3>
 </div>
 <div class="row">
     <div class=" col-md-7">
@@ -42,13 +42,6 @@
                 <label for="telefonoProp">Teléfono:</label>
                 <div class="input-group">
                     <f:input path="telefonoProp" cssClass="form-control"/>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo electrónico:</label>
-                <div class="input-group">
-                    <f:input path="correo" cssClass="form-control"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                 </div>
             </div>

@@ -20,13 +20,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h2 class="text-center">Se le enviara un codigo a su correo para comprobar si es correcto</h2>
-            <form action="<c:url value='/Login/sendEmail' />" method="post" class="mt-4">
+            <h2 class="text-center">Se le enviara un codigo al correo para comprobar sus credenciales</h2>
+            <form action="<c:url value='/Login/sendEmailProp' />" method="post" class="mt-4">
                 <div class="form-group">
                     <label for="email">Correo Electronico:</label>
                     <input type="text" id="email" name="email" class="form-control" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Enviar Codigo</button>
+                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
             </form>
             <a class="btn btn-primary btn-md" href="<s:url value="/Login"/>">Atras</a>
         </div>

@@ -74,4 +74,27 @@ public class LoginModel {
             return 0;
         }
     }
+
+    public static int updateCont(UsuariosEntity usuario, String correo) {
+        Session ses = factory.openSession();
+        try {
+            Transaction tran = ses.beginTransaction();
+
+            // Realiza la actualización
+            String hql = "UPDATE UsuariosEntity SET contrasenaUser = :contrasena WHERE correoUser = :correo";
+            org.hibernate.query.Query<?> query = ses.createQuery(hql);
+            query.setParameter("contrasena", usuario.getContrasenaUser());
+            query.setParameter("correo", correo);
+            int rowCount = query.executeUpdate();
+
+            tran.commit(); // Confirma la transacción
+
+            return rowCount; // Devuelve la cantidad de filas afectadas
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0; // Retorna 0 para indicar error
+        } finally {
+            ses.close();
+        }
+    }
 }
