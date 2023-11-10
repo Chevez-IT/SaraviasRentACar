@@ -38,7 +38,7 @@ public class EmpleadoModel {
         return listarEmpleado;
     }
 
-    public EmpleadosEntity obtenerEmpleado(String codigo) {
+    public static EmpleadosEntity obtenerEmpleado(String codigo) {
         Session ses= factory.openSession();
         try{
             EmpleadosEntity empleado= (EmpleadosEntity) ses.get(EmpleadosEntity.class, codigo);

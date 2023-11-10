@@ -20,7 +20,6 @@ public class EmpleadoTest {
         Configuration configuration = new Configuration().configure();
         factory = configuration.buildSessionFactory();
 
-        usuarioModel = new UsuarioModel(factory);
     }
 
     @After

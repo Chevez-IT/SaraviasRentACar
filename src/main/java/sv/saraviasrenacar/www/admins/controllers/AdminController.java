@@ -3,6 +3,7 @@ package sv.saraviasrenacar.www.admins.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sv.saraviasrenacar.www.admins.models.EmpleadoModel;
@@ -19,7 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class AdminController {
 
         EmpleadoModel empleadosModel = new EmpleadoModel();
-
+        UsuarioModel usuarioModel = new UsuarioModel();
 	@GetMapping("/")
 	public String index() {
 		return "adminsView/adminDashboard";
@@ -109,6 +110,25 @@ public class AdminController {
     }
         return "redirect:/Administrador/panel/empleados";
     }
+
+    @RequestMapping(value = "/panel/empleados/desactivar", method = POST)
+    public String desactivar(Model model, @RequestParam("usuarioId") String usuarioId,
+                             @RequestParam("empleadoId") String empleadoId) {
+        String nuevoEstado = "Inactivo";
+       empleadosModel.cambiarEstadoEmpleado(empleadoId, nuevoEstado);
+       usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/empleados";
+    }
+
+    @RequestMapping(value = "/panel/empleados/activar", method = POST)
+    public String activar(Model model, @RequestParam("usuarioId") String usuarioId,
+                             @RequestParam("empleadoId") String empleadoId) {
+        String nuevoEstado = "Activo";
+        empleadosModel.cambiarEstadoEmpleado(empleadoId, nuevoEstado);
+        usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/Administrador/panel/empleados";
+    }
+
 
     @GetMapping("/panel/proveedores")
     public String proveedores() {

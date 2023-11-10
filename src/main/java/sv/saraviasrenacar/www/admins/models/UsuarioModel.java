@@ -13,9 +13,6 @@ import sv.saraviasrenacar.www.tools.HibernateUtil;
 public class UsuarioModel {
     static SessionFactory factory = HibernateUtil.getSessionFactory();
 
-    public UsuarioModel(SessionFactory factory) {
-    }
-
     public static int insertarUsuario(UsuariosEntity usuario) {
         Session ses = factory.openSession();
         try {

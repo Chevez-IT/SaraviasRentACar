@@ -35,7 +35,16 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Teléfono: ${elemento.telefonoEmp}</li>
-                        <li class="list-group-item">Estado: ${elemento.estadoEmp}</li>
+                        <li class="list-group-item">Estado:
+                            <c:choose>
+                                <c:when test="${elemento.estadoEmp eq 'Activo'}">
+                                    <span class="badge bg-success">${elemento.estadoEmp}</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="badge bg-danger">${elemento.estadoEmp}</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </li>
                     </ul>
                     <div class="card-body">
                         <a href="${pageContext.request.contextPath}/Administrador/panel/empleados/${elemento.empleadoId}" class="card-link">Ver detalles</a>

@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,18 +26,30 @@
             <p><strong>Teléfono: </strong>${empleado.telefonoEmp}</p>
             <p><strong>Dirección: </strong> ${empleado.direccionEmp}</p>
             <p><strong>Estado de empleado: </strong> ${empleado.estadoEmp}</p>
-            <a href="#" class="btn btn-primary">Editar Empleado</a>
 
             <h2>Información de usuario</h2>
             <p><strong>ID Usuario: </strong>${usuario.usuarioId}</p>
             <p><strong>Usuario: </strong>${usuario.username}</p>
             <p><strong>Correo electronico: </strong> ${usuario.correoUser}</p>
             <p><strong>Estado de usuario: </strong> ${usuario.estadoUser}</p>
-            <a href="#" class="btn btn-primary">Editar Usuario</a>
 
-            <form action="/panel/empleados/desactivar" method="post">
-                <button type="submit" class="btn btn-danger">Desactivar Empleado y Usuario</button>
-            </form>
+            <c:choose>
+                <c:when test="${empleado.estadoEmp eq 'Activo'}">
+                    <form action="desactivar" method="post">
+                        <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                        <input type="hidden" name="empleadoId" value="${empleado.empleadoId}">
+                        <button type="submit" class="btn btn-danger">Desactivar</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="activar" method="post">
+                        <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                        <input type="hidden" name="empleadoId" value="${empleado.empleadoId}">
+                    <button type="submit" class="btn btn-success">Activar</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
+
         </div>
     </div>
 </div>
