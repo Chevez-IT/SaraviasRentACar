@@ -18,19 +18,20 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="#">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="${pageContext.request.contextPath}/Administrador/panel">Panel</a>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Perfil Empleado</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            GestiÃ³n
+            Gestiones
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/clientes">Clientes</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/empleados">Empleados</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/Administrador/panel/proveedores">Proveedores</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoCLI/listcli">Clientes</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoPRO/listpro">Empleados</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listvend">Ventas</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listvend">Arquileres</a>
           </div>
         </li>
       </ul>
