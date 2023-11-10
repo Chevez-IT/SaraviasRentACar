@@ -4,7 +4,9 @@
   Date: 9/11/2023
   Time: 13:48
   To change this template use File | Settings | File Templates.
---%>
+--%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,22 +31,19 @@
             <p><strong>DUI: </strong> ${propietario.duiProp}</p>
             <p><strong>Teléfono: </strong>${propietario.telefonoProp}</p>
             <p><strong>Dirección: </strong> ${propietario.direccionProp}</p>
-            <p><strong>Estado del Propietario: </strong> ${propietario.estadoProp}</p>
-
-
+            <p><strong>Estado de Propietario: </strong> ${propietario.estadoProp}</p>
+            <a href="#" class="btn btn-primary">Visualizar Arquileres</a>
+            <a href="#" class="btn btn-primary">Visualizar Ventas</a>
+            <a href="#" class="btn btn-primary">Chat</a>
 
             <h2>Información de usuario</h2>
             <p><strong>ID Usuario: </strong>${usuario.usuarioId}</p>
             <p><strong>Usuario: </strong>${usuario.username}</p>
             <p><strong>Correo electronico: </strong> ${usuario.correoUser}</p>
             <p><strong>Estado de usuario: </strong> ${usuario.estadoUser}</p>
-            <a href="#" class="btn btn-primary">Visualizar Arquileres</a>
-            <a href="#" class="btn btn-primary">Visualizar Ventas</a>
-            <a href="#" class="btn btn-primary">Chat</a>
 
-            <form action="/panel/empleados/desactivar" method="post">
-                <button type="submit" class="btn btn-danger">Desactivar Propietario</button>
-            </form>
+
+
         </div>
     </div>
 </div>
