@@ -23,6 +23,15 @@
     <div class="row">
         <h3>Gestión de clientes</h3>
     </div>
+    <form method="post" action="${pageContext.request.contextPath}/EmpleadoCLI/listcli">
+        <label for="estadoCliente">Filtrar por estado:</label>
+        <select id="estadoCliente" name="estadoCliente" class="form-select">
+            <option selected="true" disabled="disabled">${estadoCliente}</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
     <c:forEach var="elemento" items="${listaCliente}" varStatus="loop">
         <c:if test="${loop.index % 5 == 0}">
             <div class="row">
@@ -39,7 +48,7 @@
                     <li class="list-group-item">Estado: ${elemento.estadoCli}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Ver detalles</a>
+                    <a href="${pageContext.request.contextPath}/EmpleadoCLI/clientep/${elemento.clienteId}" class="card-link">Ver detalles</a>
                 </div>
             </div>
         </div>
