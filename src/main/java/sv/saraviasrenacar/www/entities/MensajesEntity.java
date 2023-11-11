@@ -7,10 +7,10 @@ import java.util.Date;
 @Entity
 @Table(name = "mensajes", schema = "saravias_rentacar")
 public class MensajesEntity implements Serializable {
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@Column(name = "mensaje_id", nullable = false, length = 12)
-	private String mensajeId;
+	private int mensajeId;
 	@Basic
 	@Column(name = "mensaje", nullable = false, length = -1)
 	private String mensaje;
@@ -27,11 +27,11 @@ public class MensajesEntity implements Serializable {
 	@JoinColumn(name = "receptor_mensaje", referencedColumnName = "usuario_id", nullable = false)
 	private UsuariosEntity usuariosByReceptorMensaje;
 
-	public String getMensajeId() {
+	public int getMensajeId() {
 		return mensajeId;
 	}
 
-	public void setMensajeId(String mensajeId) {
+	public void setMensajeId(int mensajeId) {
 		this.mensajeId = mensajeId;
 	}
 

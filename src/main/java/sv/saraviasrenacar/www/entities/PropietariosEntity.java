@@ -140,4 +140,14 @@ public class PropietariosEntity implements Serializable {
 	public void setVehiculosByPropietarioId(Collection<VehiculosEntity> vehiculosByPropietarioId) {
 		this.vehiculosByPropietarioId = vehiculosByPropietarioId;
 	}
+
+	String correo;
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
 }

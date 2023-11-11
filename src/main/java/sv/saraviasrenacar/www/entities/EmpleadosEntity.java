@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import sv.saraviasrenacar.www.entities.UsuariosEntity;
 
 @Entity
 @Table(name = "empleados", schema = "saravias_rentacar")
@@ -158,5 +159,15 @@ public class EmpleadosEntity implements Serializable {
 
 	public void setVentasByEmpleadoId(Collection<VentasEntity> ventasByEmpleadoId) {
 		this.ventasByEmpleadoId = ventasByEmpleadoId;
+	}
+
+	String correo;
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 }

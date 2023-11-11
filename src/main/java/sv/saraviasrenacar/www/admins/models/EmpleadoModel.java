@@ -6,19 +6,20 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import sv.saraviasrenacar.www.entities.AdministradoresEntity;
 import sv.saraviasrenacar.www.entities.EmpleadosEntity;
 import sv.saraviasrenacar.www.entities.UsuariosEntity;
 import sv.saraviasrenacar.www.tools.HibernateUtil;
-public class AdminModel {
+
+public class EmpleadoModel {
 
     static SessionFactory factory = HibernateUtil.getSessionFactory();
 
-    public static int insertarAdministrador(AdministradoresEntity admin) {
+
+    public static int insertarEmpleado(EmpleadosEntity empleado) {
         Session ses = factory.openSession();
         try {
             Transaction tran = ses.beginTransaction();
-            ses.save(admin);
+            ses.save(empleado);
             tran.commit();
             ses.close();
             return 1;
@@ -28,34 +29,33 @@ public class AdminModel {
         }
     }
 
-    public List<AdministradoresEntity> listarAdministrador() {
+    public static List<EmpleadosEntity> listarEmpleado(){
         SessionFactory sesFac = HibernateUtil.getSessionFactory();
         Session ses = sesFac.openSession();
-        ArrayList<AdministradoresEntity> listarAdministrador = new ArrayList<AdministradoresEntity>();
-        String sql = "from AdministradoresEntity ";
-        listarAdministrador = (ArrayList<AdministradoresEntity>) ses.createQuery(sql).list();
-        return listarAdministrador;
+        ArrayList<EmpleadosEntity> listarEmpleado = new ArrayList<EmpleadosEntity>();
+        String sql = "from EmpleadosEntity";
+        listarEmpleado = (ArrayList<EmpleadosEntity>) ses.createQuery(sql).list();
+        return listarEmpleado;
     }
 
-    public AdministradoresEntity obtenerAdministrador(String codigo) {
-        Session ses = factory.openSession();
-        try {
-            AdministradoresEntity admin = (AdministradoresEntity) ses.get(AdministradoresEntity.class, codigo);
+    public static EmpleadosEntity obtenerEmpleado(String codigo) {
+        Session ses= factory.openSession();
+        try{
+            EmpleadosEntity empleado= (EmpleadosEntity) ses.get(EmpleadosEntity.class, codigo);
             ses.close();
-            return admin;
-        } catch (Exception e) {
+            return empleado;
+        }
+        catch(Exception e){
             ses.close();
             return null;
         }
-
-
     }
 
-    public int modificarAdmin(AdministradoresEntity admin) {
+    public int modificarEmpleado(EmpleadosEntity empleado) {
         Session ses = factory.openSession();
         try {
             Transaction tran = ses.beginTransaction();
-            ses.update(admin);
+            ses.update(empleado);
             tran.commit();
             ses.close();
             return 1;
@@ -65,15 +65,15 @@ public class AdminModel {
         }
     }
 
-    public int cambiarEstadoAdministrador(String adminId, String nuevoEstado) {
+    public int cambiarEstadoEmpleado(String empleadoId, String nuevoEstado) {
         Session ses = factory.openSession();
         try {
             Transaction tran = ses.beginTransaction();
-            AdministradoresEntity admin = ses.get(AdministradoresEntity.class, adminId);
+            EmpleadosEntity empleado = ses.get(EmpleadosEntity.class, empleadoId);
 
-            if (admin != null) {
-                admin.setEstadoAdmin(nuevoEstado);
-                ses.update(admin);
+            if (empleado != null) {
+                empleado.setEstadoEmp(nuevoEstado);
+                ses.update(empleado);
                 tran.commit();
                 ses.close();
                 return 1;
