@@ -3,9 +3,7 @@ package sv.saraviasrenacar.www.empleados.models;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import sv.saraviasrenacar.www.entities.ClientesEntity;
-import sv.saraviasrenacar.www.entities.PropietariosEntity;
-import sv.saraviasrenacar.www.entities.VentasEntity;
+import sv.saraviasrenacar.www.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,4 +61,64 @@ public class EmpleadoPROModel {
             return null;
         }
     }
+
+
+    public List<VehiculosEntity> listarVehiculosPorPropietario(String propietarioId) {
+        SessionFactory sesFac = HibernateUtil.getSessionFactory();
+        Session ses = sesFac.openSession();
+
+        try {
+            String hql = "SELECT v FROM VehiculosEntity v " +
+                    "WHERE v.propietariosByPropietarioVehiculo.propietarioId = :propietarioId";
+
+            List<VehiculosEntity> vehiculos = ses.createQuery(hql, VehiculosEntity.class)
+                    .setParameter("propietarioId", propietarioId)
+                    .getResultList();
+
+            return vehiculos;
+        } finally {
+            ses.close();
+        }
+    }
+
+    public List<VentasEntity> obtenerVentasPorPropietario(String propietarioId) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            String hql = "SELECT v FROM VentasEntity v " +
+                    "JOIN v.vehiculosByVehiculoId vh " +
+                    "WHERE v.estadoVenta = 'Vendido' " +
+                    "AND vh.propietariosByPropietarioVehiculo.propietarioId = :propietarioId";
+
+            List<VentasEntity> ventas = session.createQuery(hql, VentasEntity.class)
+                    .setParameter("propietarioId", propietarioId)
+                    .getResultList();
+
+            return ventas;
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<ArquileresEntity> obtenerAlquilerPorPropietario(String propietarioId) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            String hql = "SELECT a FROM ArquileresEntity a " +
+                    "JOIN a.vehiculosByVehiculoId vh " +
+                    "WHERE a.estadoArquiler = 'Alquilado' " +
+                    "AND vh.propietariosByPropietarioVehiculo.propietarioId = :propietarioId";
+
+            List<ArquileresEntity> arquileres = session.createQuery(hql, ArquileresEntity.class)
+                    .setParameter("propietarioId", propietarioId)
+                    .getResultList();
+
+            return arquileres;
+        } finally {
+            session.close();
+        }
+    }
+
 }

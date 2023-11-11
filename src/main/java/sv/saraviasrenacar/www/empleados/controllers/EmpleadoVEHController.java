@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import sv.saraviasrenacar.www.empleados.models.EmpleadoUSUModel;
 import sv.saraviasrenacar.www.empleados.models.EmpleadoVEHModel;
-import sv.saraviasrenacar.www.empleados.models.EmpleadoVENModel;
 import sv.saraviasrenacar.www.entities.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -59,7 +57,7 @@ public class EmpleadoVEHController {
             model.addAttribute("propietariovehiculo", propietariovehiculo); // Pasamos el usuario a la vista
         }
 
-        return "empleadosView/VehiculosP";
+        return "VentasArquilerP";
     }
 
     @RequestMapping(value = "/vehiculop/activar", method = POST)

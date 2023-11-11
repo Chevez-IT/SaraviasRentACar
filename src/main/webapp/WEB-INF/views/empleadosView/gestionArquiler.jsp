@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Gestión Arquiler</title>
+    <title>Gestión Alquiler</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="/WEB-INF/views/empleadosView/navbar.jsp"/>
 <div class="container">
-    <h3 class="mt-4">Gestión de Arquiler</h3>
+    <h3 class="mt-4">Gestión de Alquiler</h3>
     <div class="row mt-3">
         <form method="post" action="${pageContext.request.contextPath}/EmpleadoARQ/listarq">
             <label for="estadoArquiler">Filtrar por estado:</label>
@@ -24,7 +24,7 @@
                 <option selected="true" disabled="disabled">${estadoArquiler}</option>
                 <option value="Disponible">Disponible</option>
                 <option value="Rechazado">Rechazado</option>
-                <option value="Arquilado">Arquilado</option>
+                <option value="Alquilado">Alquilado</option>
                 <option value="Pendiente">Pendiente</option>
                 <option value="Ofertado">Ofertado</option>
             </select>
@@ -36,7 +36,7 @@
     <table class="table table-striped table-bordered table-hover mt-4" id="tabla">
         <thead>
         <tr>
-            <th>Id Arquiler</th>
+            <th>Id Alquiler</th>
             <th>Id Vehiculo</th>
             <th>Titulo</th>
             <th>Descripcion</th>
@@ -84,11 +84,11 @@
 
 
                 <c:choose>
-                    <c:when test="${arquiler.estadoArquiler eq 'Pendiente' || arquiler.estadoArquiler eq 'Arquilado'}">
-                        <td>${arquiler.clientesByClienteActual.arquilerId}</td>
+                    <c:when test="${arquiler.estadoArquiler eq 'Pendiente' || arquiler.estadoArquiler eq 'Alquilado'}">
+                        <td>${arquiler.clientesByClienteActual.clienteId}</td>
                     </c:when>
                     <c:when test="${arquiler.estadoArquiler eq 'Ofertado'}">
-                        <td>${arquiler.clientesByClienteActual.arquilerId}</td>
+                        <td>${arquiler.clientesByClienteActual.clienteId}</td>
                     </c:when>
                     <c:otherwise>
                     </c:otherwise>
@@ -106,12 +106,12 @@
                     <c:when test="${estadoArquiler eq 'Pendiente'}">
                         <td>
                             <form action="aprobar" method="post">
-                                <input type="hidden" name="ventaId" value="${arquiler.ventaId}">
+                                <input type="hidden" name="arquilerId" value="${arquiler.arquilerId}">
                                 <button type="submit" class="btn btn-success">Aprobar</button>
                             </form>
 
                             <form action="rechazar" method="post">
-                                <input type="hidden" name="ventaId" value="${arquiler.ventaId}">
+                                <input type="hidden" name="arquilerId" value="${arquiler.arquilerId}">
                                 <button type="submit" class="btn btn-success">Rechazar</button>
                             </form>
 
@@ -127,7 +127,7 @@
 
                             <form action="arquilar" method="post">
                                 <input type="hidden" name="arquilerId" value="${arquiler.arquilerId}">
-                                <button type="submit" class="btn btn-success">Arquilar</button>
+                                <button type="submit" class="btn btn-success">Alquilar</button>
                             </form>
 
                             <form action="rechazardis" method="post">

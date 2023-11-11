@@ -6,12 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import sv.saraviasrenacar.www.empleados.models.EmpleadoCLIModel;
 import sv.saraviasrenacar.www.empleados.models.EmpleadoPROModel;
 import sv.saraviasrenacar.www.empleados.models.EmpleadoUSUModel;
-import sv.saraviasrenacar.www.entities.ClientesEntity;
-import sv.saraviasrenacar.www.entities.PropietariosEntity;
-import sv.saraviasrenacar.www.entities.UsuariosEntity;
+import sv.saraviasrenacar.www.entities.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -63,38 +60,36 @@ public class EmpleadoPROController {
         return "empleadosView/PropietarioP";
     }
 
-    @RequestMapping (value = "/activar", method = GET)
+    @RequestMapping(value = "/propietariop/activar", method = POST)
     public String activarPropietario(Model model, @RequestParam("usuarioId") String usuarioId,
                                  @RequestParam("propietarioId") String propietarioId) {
-        String estado = "Activo";
-
-        model.addAttribute("Activar", empleadoPROModel.cambiarEstadoPropietario(propietarioId,estado));
-        model.addAttribute("Activar", empleadoUSUModel.cambiarEstadoUsuario(usuarioId,estado));
-
-        return "empleadosView/PropietarioP";
-
+        String nuevoEstado = "Activo";
+        empleadoPROModel.cambiarEstadoPropietario(propietarioId, nuevoEstado);
+        empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/EmpleadoPRO/listpro";
     }
 
-
-    @RequestMapping (value = "/desactivar", method = GET)
+    @RequestMapping(value = "/propietariop/desactivar", method = POST)
     public String desactivarPropietario(Model model, @RequestParam("usuarioId") String usuarioId,
                                     @RequestParam("propietarioId") String propietarioId) {
         String nuevoEstado = "Inactivo";
-
-        int resultadoPropietario = empleadoPROModel.cambiarEstadoPropietario(propietarioId, nuevoEstado);
-        int resultadoUsuario = empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
-
-        // Verifica los resultados si es necesario
-        if (resultadoPropietario== 1 && resultadoUsuario == 1) {
-            model.addAttribute("Desactivar", "Estado cambiado con éxito");
-            model.addAttribute("Perfil", empleadoPROModel.obtenerPropietarios(propietarioId));
-        } else {
-            model.addAttribute("Desactivar", "Hubo un error al cambiar el estado");
-            model.addAttribute("Perfil", empleadoPROModel.obtenerPropietarios(propietarioId));
-        }
-
-        return "empleadosView/PropietarioP";
+        empleadoPROModel.cambiarEstadoPropietario(propietarioId, nuevoEstado);
+        empleadoUSUModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
+        return "redirect:/EmpleadoPRO/listpro";
     }
+
+    @RequestMapping(value = "/propietariop/historialp", method = POST)
+    public String ventasPropietario(Model model, @RequestParam("propietarioId") String propietarioId){
+        empleadoPROModel.obtenerVentasPorPropietario(propietarioId);
+
+        model.addAttribute("ventasvehiculo",empleadoPROModel.obtenerVentasPorPropietario(propietarioId));
+        model.addAttribute("arquilervehiculo",empleadoPROModel.obtenerAlquilerPorPropietario(propietarioId));
+        model.addAttribute("propietariovehiculo",empleadoPROModel.listarVehiculosPorPropietario(propietarioId));
+
+        return "empleadosView/HistorialP";
+    }
+
+
 
 }
 

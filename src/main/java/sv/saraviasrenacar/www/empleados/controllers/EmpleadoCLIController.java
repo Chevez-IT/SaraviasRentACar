@@ -79,6 +79,16 @@ public class EmpleadoCLIController {
 		return "redirect:/EmpleadoCLI/listcli";
 	}
 
+
+	@RequestMapping(value = "/clientep/historial", method = POST)
+	public String historialPropietario(Model model, @RequestParam("clienteId") String clienteId){
+
+		model.addAttribute("compravehiculo",empleadoCLIModel.obtenerVentasPorCliente(clienteId));
+		model.addAttribute("arquilervehiculocli",empleadoCLIModel.obtenerAlquilerPorCliente(clienteId));
+
+		return "empleadosView/HistorialC";
+	}
+
 }
 
 

@@ -32,9 +32,11 @@
             <p><strong>Teléfono: </strong>${cliente.telefonoCli}</p>
             <p><strong>Dirección: </strong> ${cliente.direccionCli}</p>
             <p><strong>Estado de empleado: </strong> ${cliente.estadoCli}</p>
-            <a href="#" class="btn btn-primary">Visualizar Arquileres</a>
-            <a href="#" class="btn btn-primary">Visualizar Ventas</a>
-            <a href="#" class="btn btn-primary">Chat</a>
+
+            <form action="${pageContext.request.contextPath}/EmpleadoCLI/clientep/historial" method="post">
+                <input type="hidden" name="clienteId" value="${cliente.clienteId}">
+                <button type="submit" class="btn btn-success">Historial</button>
+            </form>
 
             <h2>Información de usuario</h2>
             <p><strong>ID Usuario: </strong>${usuario.usuarioId}</p>

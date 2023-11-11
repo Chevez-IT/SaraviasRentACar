@@ -17,19 +17,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Inicio</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Perfil Empleado</a>
-        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Gestiones
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestiones</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoCLI/listcli">Clientes</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoPRO/listpro">Empleados</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoPRO/listpro">Propietarios</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEH/listveh">Vehiculos</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listven">Ventas</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoARQ/listarq">Arquileres</a>

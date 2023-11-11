@@ -3,6 +3,7 @@ package sv.saraviasrenacar.www.empleados.models;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import sv.saraviasrenacar.www.entities.ArquileresEntity;
 import sv.saraviasrenacar.www.entities.ClientesEntity;
 import sv.saraviasrenacar.www.entities.VentasEntity;
 
@@ -63,4 +64,46 @@ public class EmpleadoCLIModel {
             return null;
         }
     }
+
+    public List<VentasEntity> obtenerVentasPorCliente(String clienteId) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            String hql = "SELECT v FROM VentasEntity v " +
+                    "JOIN v.clientesByCompradorVenta c " +
+                    "WHERE v.estadoVenta = 'Vendido' " +
+                    "AND c.clienteId = :clienteId";
+
+            List<VentasEntity> ventas = session.createQuery(hql, VentasEntity.class)
+                    .setParameter("clienteId", clienteId)
+                    .getResultList();
+
+            return ventas;
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<ArquileresEntity> obtenerAlquilerPorCliente(String clienteId) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            String hql = "SELECT a FROM ArquileresEntity a " +
+                    "JOIN a.clientesByClienteActual aa " +
+                    "WHERE a.estadoArquiler = 'Alquilado' " +
+                    "AND aa.arquileresByClienteId = :clienteId";
+
+            List<ArquileresEntity> arquileres = session.createQuery(hql, ArquileresEntity.class)
+                    .setParameter("clienteId", clienteId)
+                    .getResultList();
+
+            return arquileres;
+        } finally {
+            session.close();
+        }
+    }
+
+
 }

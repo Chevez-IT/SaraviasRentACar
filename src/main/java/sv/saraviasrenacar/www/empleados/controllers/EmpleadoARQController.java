@@ -64,8 +64,8 @@ public class EmpleadoARQController {
     }
 
     @RequestMapping(value = "arquilar", method = RequestMethod.POST)
-    public String venderOferta(Model model, @RequestParam("arquilerId") String arquilerId) {
-        String nuevoEstado = "Arquilado";
+    public String alquilarOferta(Model model, @RequestParam("arquilerId") String arquilerId) {
+        String nuevoEstado = "Alquilado";
         empleadoARQModel.cambiarEstadoArquiler(arquilerId, nuevoEstado);
         return "redirect:/EmpleadoARQ/listarq";
     }

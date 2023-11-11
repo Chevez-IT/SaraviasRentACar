@@ -32,8 +32,12 @@
             <p><strong>Teléfono: </strong>${propietario.telefonoProp}</p>
             <p><strong>Dirección: </strong> ${propietario.direccionProp}</p>
             <p><strong>Estado de Propietario: </strong> ${propietario.estadoProp}</p>
-            <a href="#" class="btn btn-primary">Visualizar Arquileres</a>
-            <a href="#" class="btn btn-primary">Visualizar Ventas</a>
+
+            <form action="${pageContext.request.contextPath}/EmpleadoPRO/propietariop/historialp" method="post">
+                <input type="hidden" name="propietarioId" value="${propietario.propietarioId}">
+                <button type="submit" class="btn btn-success">Historial</button>
+            </form>
+
             <a href="#" class="btn btn-primary">Chat</a>
 
             <h2>Información de usuario</h2>
@@ -41,6 +45,23 @@
             <p><strong>Usuario: </strong>${usuario.username}</p>
             <p><strong>Correo electronico: </strong> ${usuario.correoUser}</p>
             <p><strong>Estado de usuario: </strong> ${usuario.estadoUser}</p>
+
+            <c:choose>
+                <c:when test="${usuario.estadoUser eq 'Activo'}">
+                    <form action="desactivar" method="post">
+                        <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                        <input type="hidden" name="propietarioId" value="${propietario.propietarioId}">
+                        <button type="submit" class="btn btn-success">Desactivar</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="activar" method="post">
+                        <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                        <input type="hidden" name="propietarioId" value="${propietario.propietarioId}">
+                        <button type="submit" class="btn btn-success">Activar</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
 
 
 
