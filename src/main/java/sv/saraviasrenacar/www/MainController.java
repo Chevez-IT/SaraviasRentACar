@@ -21,7 +21,7 @@ public class MainController {
 		} else if ("4".equals(rol)) {
 			return "redirect:/Cliente/";
 		} else {
-		return "redirect:/Login";
+		  return "redirect:/Login";
 		}
 	}
 }
