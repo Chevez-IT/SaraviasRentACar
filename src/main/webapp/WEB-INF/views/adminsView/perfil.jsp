@@ -50,7 +50,7 @@
                 </c:otherwise>
             </c:choose>
 
-            <form action="listamensaje" method="post">
+            <form action="" method="post">
                 <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
                 <input type="hidden" name="emisor" value="<%= session.getAttribute("emisor") %>" />
                 <input type="hidden" name="emisor" value="${emisor}" />

@@ -19,8 +19,8 @@ public class ChatController {
             public String chat(ModelMap model, HttpSession session) {
                 session.setAttribute("emisor", "CG103");
                 session.setAttribute("receptor", "DC253");
-                String emisor = "DC253";
-                String receptor = "CG103";
+                String emisor = "DC253"; //El id del usuario en al session
+                String receptor = "CG103"; //El id del usuario con el que se va chatear
                 List<MensajesEntity> mensajes = ChatModel.listarMensajes(emisor, receptor);
                 model.addAttribute("mensajes", mensajes);
                 return "chatView/chat";
