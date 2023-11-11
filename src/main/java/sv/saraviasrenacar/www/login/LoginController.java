@@ -51,7 +51,7 @@ public class LoginController {
             } else if ("3".equals(rolValue)) {
                 return "redirect:/Empleado/";
             } else if ("4".equals(rolValue)) {
-                return "redirect:/Inicio/";
+                return "redirect:/Cliente/";
             }
         } else {
             return "redirect:/login?error=true";

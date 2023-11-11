@@ -2,29 +2,26 @@ package sv.saraviasrenacar.www;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.annotation.PostConstruct;
 
 @Controller
 public class MainController {
 	@GetMapping("/")
-	public String index() {
-		// Verificar si hay una sesión activa y el valor del rol
-		int rol = obtenerRol(); // Supongamos que tienes un método obtenerRol()
+	public String index(@RequestParam("rolId") String rol) {
 
-		if (rol == 1) {
+		if ("1".equals(rol)) {
 			return "redirect:/Propietario/";
-		} else if (rol == 2) {
+		} else if ("2".equals(rol)) {
 			return "redirect:/Administrador/";
-		} else if (rol == 3) {
+		} else if ("3".equals(rol)) {
 			return "redirect:/Empleado/";
+		} else if ("4".equals(rol)) {
+			return "redirect:/Cliente/";
 		} else {
-			return "redirect:/Inicio/";
+		return "redirect:/Login";
 		}
-	}
-
-	// Método de ejemplo para obtener el rol (deberías implementar esta lógica)
-	private int obtenerRol() {
-		// Supongamos que aquí tienes la lógica para obtener el rol.
-		return 2; // Valor de ejemplo
 	}
 }
