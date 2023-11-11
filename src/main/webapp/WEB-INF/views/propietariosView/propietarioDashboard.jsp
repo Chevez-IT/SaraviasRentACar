@@ -52,7 +52,7 @@
                                             Mis Vehiculos
                                         </a>
                                         <h4 class="fw-bold text-white">Vehiculos</h4>
-                                        <h4 class="fw-bold text-white">Pendientes</h4>
+                                        <h4 class="fw-bold text-white">Disponibles</h4>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
                                         <h1 class="fw-bold text-white">${nVehiculosEnEspera}</h1>
@@ -97,7 +97,8 @@
                                     <div class="col-6">
                                         <a class="font-monospace text-success fw-bold text-uppercase fs-6">Ventas
                                             Realizadas</a>
-                                        <h2 class="fw-bold text-secondary">Ventas Actuales</h2>
+                                        <h2 class="fw-bold text-secondary">Ventas</h2>
+                                        <h2 class="fw-bold text-secondary">Actuales</h2>
                                     </div>
                                     <div class="col-2">
                                         <h1 class="fw-bold text-secondary">${nVentasActivas}</h1>
@@ -117,7 +118,8 @@
                                     <div class="col-6">
                                         <a class="font-monospace text-primary fw-bold text-uppercase fs-6">Arquileres
                                             Realizadas</a>
-                                        <h2 class="fw-bold text-secondary">Arquileres Actuales</h2>
+                                        <h2 class="fw-bold text-secondary">Arquileres</h2>
+                                        <h2 class="fw-bold text-secondary">Actuales</h2>
                                     </div>
                                     <div class="col-2">
                                         <h1 class="fw-bold text-secondary">${nArquileresActivos}</h1>
@@ -150,33 +152,6 @@
             </div>
             <div class="b-example-divider"
                  style="width: 100%;height: 3rem;background-color: rgba(0, 0, 0, .1);border: solid rgba(0, 0, 0, .15);border-width: 1px 0;box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, .1), inset 0 0.125em 0.5em rgba(0, 0, 0, .15);"></div>
-
-            <div class="px-lg-5 pt-5 text-center">
-                <h1 class="display-4 fw-bold text-body-emphasis">Vehiculos en espera</h1>
-                <table class="table table-hover table-sm caption-top">
-                    <caption>Vehiculos sin aprobar</caption>
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Modelo - Año</th>
-                        <th scope="col">Placa</th>
-                        <th scope="col">Estado</th>
-                    </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                    <c:forEach items="${vehiculosEnEspera}" var="vehiculos">
-                        <tr>
-                            <th scope="row">${vehiculos.vehiculoId}</th>
-                            <td>${vehiculos.marcaVehiculo}</td>
-                            <td>${vehiculos.modeloVehiculo}</td>
-                            <td>${vehiculos.placaVehiculo}</td>
-                            <td>${vehiculos.estadoVehiculo}</td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
 
             <div class="px-lg-5 pt-5 text-center">
                 <h1 class="display-4 fw-bold text-body-emphasis">Arquileres en espera</h1>
@@ -231,8 +206,6 @@
                     </tbody>
                 </table>
             </div>
-
-
         </div>
 
 

@@ -15,13 +15,14 @@ public class VehiculosModel {
 	private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
 	public int insertar(VehiculosEntity vehiculo) {
-		try (Session ses = factory.openSession()) {
-			Transaction tran = ses.beginTransaction();
-			ses.save(vehiculo);
-			tran.commit();
-			return 1;
+		try (Session session = factory.openSession()) {
+			Transaction transaction = session.beginTransaction();
+			session.save(vehiculo);
+			transaction.commit();
+			return 1; // Éxito
 		} catch (Exception e) {
-			return 0;
+			e.printStackTrace();
+			return 0; // Error
 		}
 	}
 

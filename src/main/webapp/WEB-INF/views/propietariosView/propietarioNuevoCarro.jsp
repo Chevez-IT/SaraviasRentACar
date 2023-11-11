@@ -52,7 +52,7 @@
             </div>
 
             <div class="container col-12 my-2">
-                <form>
+                <form action="/Crear" method="post">
                     <div class="row">
                         <div class="col-12 col-md-8">
                             <div class="mb-3">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">Agregar</button>
+                        <button class="btn btn-primary" type="submit">Agregar</button>
                         <button class="btn btn-secondary" type="button">Cancelar</button>
                     </div>
                 </form>
