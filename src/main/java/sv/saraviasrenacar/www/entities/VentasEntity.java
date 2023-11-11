@@ -20,7 +20,7 @@ public class VentasEntity implements Serializable {
 	@Column(name = "precio_venta", nullable = false, length = 255)
 	private String precioVenta;
 	@Basic
-	@Column(name = "fecha_compra_venta", nullable = false)
+	@Column(name = "fecha_compra_venta", nullable = true)
 	private Date fechaCompraVenta;
 	@Basic
 	@Column(name = "estado_venta", nullable = false, length = 25)
@@ -32,10 +32,10 @@ public class VentasEntity implements Serializable {
 	@JoinColumn(name = "vehiculo_id", referencedColumnName = "vehiculo_id", nullable = false)
 	private VehiculosEntity vehiculosByVehiculoId;
 	@ManyToOne
-	@JoinColumn(name = "comprador_venta", referencedColumnName = "cliente_id", nullable = false)
+	@JoinColumn(name = "comprador_venta", referencedColumnName = "cliente_id", nullable = true)
 	private ClientesEntity clientesByCompradorVenta;
 	@ManyToOne
-	@JoinColumn(name = "gestor_id", referencedColumnName = "empleado_id", nullable = false)
+	@JoinColumn(name = "gestor_id", referencedColumnName = "empleado_id", nullable = true)
 	private EmpleadosEntity empleadosByGestorId;
 
 	public String getVentaId() {

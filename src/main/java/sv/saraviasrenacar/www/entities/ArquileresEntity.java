@@ -21,10 +21,10 @@ public class ArquileresEntity implements Serializable {
 	@Column(name = "precio_arquiler", nullable = false, precision = 2)
 	private BigDecimal precioArquiler;
 	@Basic
-	@Column(name = "fecha_inicio", nullable = false)
+	@Column(name = "fecha_inicio", nullable = true)
 	private Date fechaInicio;
 	@Basic
-	@Column(name = "fecha_finalizacion", nullable = false)
+	@Column(name = "fecha_finalizacion", nullable = true)
 	private Date fechaFinalizacion;
 	@Basic
 	@Column(name = "estado_arquiler", nullable = false, length = 25)
@@ -36,10 +36,10 @@ public class ArquileresEntity implements Serializable {
 	@JoinColumn(name = "vehiculo_id", referencedColumnName = "vehiculo_id", nullable = false)
 	private VehiculosEntity vehiculosByVehiculoId;
 	@ManyToOne
-	@JoinColumn(name = "cliente_actual", referencedColumnName = "cliente_id", nullable = false)
+	@JoinColumn(name = "cliente_actual", referencedColumnName = "cliente_id", nullable = true)
 	private ClientesEntity clientesByClienteActual;
 	@ManyToOne
-	@JoinColumn(name = "gestor_id", referencedColumnName = "empleado_id", nullable = false)
+	@JoinColumn(name = "gestor_id", referencedColumnName = "empleado_id", nullable = true)
 	private EmpleadosEntity empleadosByGestorId;
 
 	public String getArquilerId() {

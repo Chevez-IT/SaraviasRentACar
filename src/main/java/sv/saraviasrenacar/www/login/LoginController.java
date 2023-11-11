@@ -354,7 +354,7 @@ public class LoginController {
             propietario.setUsuariosByUsuarioPropietario(usuario);
             propietario.setFotoProp("default.png");
             propietario.setEstadoProp("Activo");
-            empleado.setEmpleadoId("CR421E");
+            empleado.setEmpleadoId("CR358E");
             propietario.setEmpleadosByGestorId(empleado);
             LoginModel.insertarProp(propietario);
         }
