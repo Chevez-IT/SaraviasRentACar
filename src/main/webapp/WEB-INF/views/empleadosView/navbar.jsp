@@ -17,6 +17,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="${pageContext.request.contextPath}/EmpleadoDASH/inicio">Inicio</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestiones</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -26,6 +29,9 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoVEN/listven">Ventas</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoARQ/listarq">Arquileres</a>
           </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="${pageContext.request.contextPath}/EmpleadoDASH/inicio">Inicio</a>
         </li>
       </ul>
     </div>
