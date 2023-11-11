@@ -18,13 +18,13 @@ public class MainController {
 		} else if (rol == 3) {
 			return "redirect:/Empleado/";
 		} else {
-			return "redirect:/Inicio/";
+			return "redirect:/Cliente/";
 		}
 	}
 
 	// Método de ejemplo para obtener el rol (deberías implementar esta lógica)
 	private int obtenerRol() {
 		// Supongamos que aquí tienes la lógica para obtener el rol.
-		return 2; // Valor de ejemplo
+		return 4; // Valor de ejemplo
 	}
 }
