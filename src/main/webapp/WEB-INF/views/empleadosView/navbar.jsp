@@ -21,7 +21,7 @@
           <a class="nav-link" href="${pageContext.request.contextPath}/EmpleadoDASH/inicio">Inicio</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestiones</a>
+          <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/EmpleadoCLI/listcli" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestiones</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoCLI/listcli">Clientes</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoPRO/listpro">Propietarios</a>
@@ -30,6 +30,7 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoARQ/listarq">Arquileres</a>
           </div>
         </li>
+
       </ul>
     </div>
     <ul class="navbar-nav ml-auto">

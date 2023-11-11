@@ -9,5 +9,7 @@ public class EmpleadoDASHController {
     public String Inicio() {
         return "empleadosView/empleadoDashboard";
     }
+
+
 }
 

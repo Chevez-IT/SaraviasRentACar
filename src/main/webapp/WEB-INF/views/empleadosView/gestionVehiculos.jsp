@@ -29,7 +29,6 @@
             <option selected="true" disabled="disabled">${estadoVehiculo}</option>
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
-            <option value="Pendiente">Pendiente</option>
             <option value="Vendido">Vendido</option>
             <option value="Alquilado">Alquilado</option>
         </select>
