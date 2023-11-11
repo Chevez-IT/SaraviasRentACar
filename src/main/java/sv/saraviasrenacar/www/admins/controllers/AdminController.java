@@ -6,21 +6,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sv.saraviasrenacar.www.admins.models.ClientesModel;
-import sv.saraviasrenacar.www.admins.models.EmpleadoModel;
-import sv.saraviasrenacar.www.entities.EmpleadosEntity;
-import sv.saraviasrenacar.www.entities.RolesEntity;
-import sv.saraviasrenacar.www.entities.UsuariosEntity;
-import sv.saraviasrenacar.www.entities.PropietariosEntity;
-import sv.saraviasrenacar.www.entities.AdministradoresEntity;
-import sv.saraviasrenacar.www.entities.ClientesEntity;
-import sv.saraviasrenacar.www.admins.models.UsuarioModel;
-import sv.saraviasrenacar.www.admins.models.AdminModel;
-import sv.saraviasrenacar.www.admins.models.PropietariosModel;
+import sv.saraviasrenacar.www.admins.models.*;
+import sv.saraviasrenacar.www.entities.*;
 
 import sv.saraviasrenacar.www.tools.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.Provider;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -90,18 +83,7 @@ public class AdminController {
         return "adminsView/editar";
     }
 
-    @RequestMapping(value = "/panel/empleados/{id}", method = GET)
-    public String empleadoProfile(@PathVariable("id") String id, Model model) {
-        EmpleadosEntity empleado = empleadosModel.obtenerEmpleado(id);
 
-        if (empleado != null) {
-            UsuariosEntity usuario = empleado.getUsuariosByUsuarioEmpleado(); // Obtenemos el usuario asociado al empleado
-            model.addAttribute("empleado", empleado);
-            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
-        }
-
-        return "adminsView/perfil";
-    }
 
 
     @RequestMapping(value = "/panel/empleados/new", method = GET)
@@ -297,5 +279,55 @@ public class AdminController {
         usuarioModel.cambiarEstadoUsuario(usuarioId, nuevoEstado);
         return "redirect:/Administrador/panel/admin";
     }
+
+
+
+
+
+
+    @RequestMapping(value = "/panel/empleados/{id}", method = GET)
+    public String empleadoProfile(@PathVariable("id") String id, Model model, HttpSession session) {
+        EmpleadosEntity empleado = empleadosModel.obtenerEmpleado(id);
+
+        if (empleado != null) {
+            UsuariosEntity usuario = empleado.getUsuariosByUsuarioEmpleado(); // Obtenemos el usuario asociado al empleado
+            model.addAttribute("empleado", empleado);
+            model.addAttribute("usuario", usuario); // Pasamos el usuario a la vista
+            session.setAttribute("emisor", "DC312");
+        }
+
+        return "adminsView/perfil";
+    }
+
+    @RequestMapping(value = "/panel/admin/listamensaje", method = POST)
+
+    public @ResponseBody String chat(ModelMap model, HttpSession session, @RequestParam("emisor") String emisor, @RequestParam("usuarioId") String usuarioID) {
+        List<MensajesEntity> mensajes = ChatModel.listarMensajes(emisor, usuarioID);
+        model.addAttribute("mensajes", mensajes);
+        return "adminsView/chat";
+    }
+
+
+
+    @RequestMapping(value = "/createMensaje", method = RequestMethod.POST)
+    public String createMensaje(@ModelAttribute("mensaje") MensajesEntity mensaje,
+                                @RequestParam("emisor") String emisor,
+                                @RequestParam("receptor") String receptor,
+                                Model model, RedirectAttributes atributos) {
+
+        MensajesEntity mensajeIn = new MensajesEntity();
+        UsuariosEntity usuario = new UsuariosEntity();
+        usuario.setUsuarioId(emisor);
+        mensajeIn.setUsuariosByEmisorMensaje(usuario);
+        UsuariosEntity usuario2 = new UsuariosEntity();
+        usuario2.setUsuarioId(receptor);
+        mensajeIn.setUsuariosByReceptorMensaje(usuario2);
+        mensajeIn.setMensaje(mensaje.getMensaje());
+        mensajeIn.setEstadoMensaje("Leido");
+        ChatModel.insertarMensaje(mensajeIn);
+        return "redirect:/Chat";
+    }
+
+
 
 }

@@ -50,11 +50,13 @@
                 </c:otherwise>
             </c:choose>
 
-            <form action="chat" method="post">
+            <form action="listamensaje" method="post">
                 <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
-                <input type="hidden" name="empleadoId" value="${empleado.empleadoId}">
+                <input type="hidden" name="emisor" value="<%= session.getAttribute("emisor") %>" />
+                <input type="hidden" name="emisor" value="${emisor}" />
                 <button type="submit" class="btn btn-primary">Chat</button>
             </form>
+
 
         </div>
     </div>
