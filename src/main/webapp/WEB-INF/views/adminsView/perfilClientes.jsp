@@ -33,7 +33,6 @@
             <p><strong>Teléfono: </strong>${cliente.telefonoCli}</p>
             <p><strong>Dirección: </strong> ${cliente.direccionCli}</p>
             <p><strong>Estado de empleado: </strong> ${cliente.estadoCli}</p>
-            <a href="#" class="btn btn-primary">Chat</a>
 
             <h2>Información de usuario</h2>
             <p><strong>ID Usuario: </strong>${usuario.usuarioId}</p>

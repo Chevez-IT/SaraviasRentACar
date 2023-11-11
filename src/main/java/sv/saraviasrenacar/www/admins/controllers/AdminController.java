@@ -15,6 +15,15 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+
 @Controller
 @RequestMapping("Administrador")
 @SessionAttributes({"usuarioId", "rolId"})
@@ -103,7 +112,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/panel/empleados/create", method = POST)
-	public String empleadoNewInsert(@ModelAttribute("empleado") EmpleadosEntity empleado, Model model, RedirectAttributes atributos) {
+	public String empleadoNewInsert(@ModelAttribute("empleado") EmpleadosEntity empleado, Model model, RedirectAttributes atributos, HttpSession ses
+	) {
 
 		Tools tools = new Tools();
 		UsuariosEntity usuario = new UsuariosEntity();
@@ -116,16 +126,20 @@ public class AdminController {
 		String idNRamdom = tools.GenerarIdNRandom();
 		String username = user + idNRamdom;
 		String idUser = idIniciales + idNRamdom;
+		String password = tools.encriptarContraseña(contrasenna);
 
 		System.out.println("Correo:" + empleado.getCorreo());
 
 		usuario.setUsuarioId(idUser);
 		usuario.setUsername(username);
 		usuario.setCorreoUser(empleado.getCorreo());
-		usuario.setContrasenaUser(contrasenna);
+		usuario.setContrasenaUser(password);
 		rol.setRolId("3");
 		usuario.setRolesByRolId(rol);
 		usuario.setEstadoUser("Activo");
+
+		EnviarCredenciales(contrasenna, username, empleado.getCorreo());
+
 
 		int resultUsuario = UsuarioModel.insertarUsuario(usuario);
 
@@ -135,7 +149,7 @@ public class AdminController {
 			empleado.setUsuariosByUsuarioEmpleado(usuario);
 			empleado.setFotoEmp("default.png");
 			empleado.setEstadoEmp("Activo");
-			admin.setAdministradorId("DC312A");
+			admin.setAdministradorId("EF306A");
 			empleado.setAdministradoresByCreadorId(admin);
 
 			EmpleadoModel.insertarEmpleado(empleado);
@@ -216,7 +230,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/panel/admin/create", method = POST)
-	public String adminNewInsert(@ModelAttribute("admin") AdministradoresEntity administrador, Model model, RedirectAttributes atributos) {
+	public String adminNewInsert(@ModelAttribute("admin") AdministradoresEntity administrador, Model model, RedirectAttributes atributos, HttpSession ses) {
 
 		Tools tools = new Tools();
 		UsuariosEntity usuario = new UsuariosEntity();
@@ -228,16 +242,18 @@ public class AdminController {
 		String idNRamdom = tools.GenerarIdNRandom();
 		String username = user + idNRamdom;
 		String idUser = idIniciales + idNRamdom;
+		String password = tools.encriptarContraseña(contrasenna);
 
-		System.out.println("Correo:" + administrador.getCorreoAdmin());
 
 		usuario.setUsuarioId(idUser);
 		usuario.setUsername(username);
 		usuario.setCorreoUser(administrador.getCorreoAdmin());
-		usuario.setContrasenaUser(contrasenna);
+		usuario.setContrasenaUser(password);
 		rol.setRolId("2");
 		usuario.setRolesByRolId(rol);
 		usuario.setEstadoUser("Activo");
+
+		EnviarCredenciales(contrasenna, username, administrador.getCorreoAdmin());
 
 		int resultUsuario = UsuarioModel.insertarUsuario(usuario);
 
@@ -301,20 +317,32 @@ public class AdminController {
 		return "adminsView/perfil";
 	}
 
-	@RequestMapping(value = "listamensaje", method = POST)
-	public @ResponseBody String chat(ModelMap model, HttpSession session, @RequestParam("emisor") String emisor, @RequestParam("usuarioId") String usuarioID) {
-		List<MensajesEntity> mensajes = ChatModel.listarMensajes(emisor, usuarioID);
+	@RequestMapping(value = "/panel/admin/listamensaje", method = POST)
+	public String chat(ModelMap model, HttpSession session, @RequestParam("receptor") String receptor) {
+		// Obtener variables de sesión del controlador de login
+
+		String emisor = (String) session.getAttribute("usuarioId");
+		String rolId = (String) session.getAttribute("rolId");
+		String userName = (String) session.getAttribute("userName");
+		session.setAttribute("receptor", receptor);
+
+		List<MensajesEntity> mensajes = ChatModel.listarMensajes(emisor, receptor);
 		model.addAttribute("mensajes", mensajes);
+		System.out.println("estos son los que salen" + emisor + receptor);
+
 		return "adminsView/chat";
 	}
 
 
 	@RequestMapping(value = "/createMensaje", method = RequestMethod.POST)
 	public String createMensaje(@ModelAttribute("mensaje") MensajesEntity mensaje,
-								@RequestParam("emisor") String emisor,
-								@RequestParam("receptor") String receptor,
+								HttpSession session, // Agrega el objeto HttpSession
 								Model model, RedirectAttributes atributos) {
 
+		// Obtener el valor del emisor desde la sesión
+		String receptor = (String) session.getAttribute("receptor");
+
+		String emisor = (String) session.getAttribute("usuarioId");
 		MensajesEntity mensajeIn = new MensajesEntity();
 		UsuariosEntity usuario = new UsuariosEntity();
 		usuario.setUsuarioId(emisor);
@@ -325,8 +353,51 @@ public class AdminController {
 		mensajeIn.setMensaje(mensaje.getMensaje());
 		mensajeIn.setEstadoMensaje("Leido");
 		ChatModel.insertarMensaje(mensajeIn);
-		return "redirect:/Chat";
+		return "redirect:/Administrador/panel/admin/listamensaje";
 	}
 
 
+
+
+
+/* Metodos de correo */
+	public void EnviarCredenciales(String contrasenna, String usuario, String correo) {
+		final String fromEmail = "javaprueba2023@gmail.com"; // Cambia esto al correo desde el que enviarás el mensaje
+		final String password = "rxgfdspfuoyetrze"; // Cambia esto a tu contraseña de correo
+		// Configuración de las propiedades del servidor de correo
+		Properties properties = new Properties();
+		properties.put("mail.smtp.host", "smtp.gmail.com");
+		properties.put("mail.smtp.port", "587");
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
+		Session session = Session.getDefaultInstance(properties, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(fromEmail, password);
+			}
+		});
+		Tools tools = new Tools();
+		String codigo = String.valueOf(tools.GenerarContraseña());
+		try {
+			// Crear un mensaje de correo
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(fromEmail));
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+			message.setSubject("✨ Codigo Generado ✨"); // Cambia el asunto del correo según tus necesidades
+			String contenidoCorreo = "¡Hola! 😊\n\n";
+			contenidoCorreo += "     Su contraseña es:      " +contrasenna+ "\n";
+			contenidoCorreo += "     Su usuario es:      " +usuario+ "\n";
+			contenidoCorreo += "************\n\n";
+			contenidoCorreo += "Por favor, guarda esta codigo de forma segura\n\n";
+			contenidoCorreo += "¡Gracias y ten un buen día!\n";
+			message.setText(contenidoCorreo); // Agrega el contenido del correo
+			// Enviar el mensaje
+			Transport.send(message);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+}
 }

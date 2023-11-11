@@ -18,7 +18,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <h3>Gestión de empleados</h3>
+        <h3>Gestión de Administradores</h3>
     </div>
     <div class="row">
         <div class="col-md-10">
