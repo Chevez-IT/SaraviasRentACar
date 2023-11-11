@@ -255,7 +255,7 @@ public class AdminController {
 
         if (resultUsuario == 1){
 
-            administrador.setEstadoAdmin(idUser+"A");
+            administrador.setAdministradorId(idUser+"A");
             administrador.setUsuariosByUsuarioAdmin(usuario);
             administrador.setFotoAdmin("default.png");
             administrador.setNombresAdmin(administrador.getNombresAdmin());

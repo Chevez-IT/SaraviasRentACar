@@ -50,6 +50,12 @@
                 </c:otherwise>
             </c:choose>
 
+            <form action="chat" method="post">
+                <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+                <input type="hidden" name="empleadoId" value="${empleado.empleadoId}">
+                <button type="submit" class="btn btn-primary">Chat</button>
+            </form>
+
         </div>
     </div>
 </div>
