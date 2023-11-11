@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Angie
-  Date: 9/11/2023
-  Time: 13:48
-  To change this template use File | Settings | File Templates.
---%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -33,9 +27,9 @@
             <p><strong>Dirección: </strong> ${cliente.direccionCli}</p>
             <p><strong>Estado de empleado: </strong> ${cliente.estadoCli}</p>
 
-            <form action="${pageContext.request.contextPath}/EmpleadoCLI/clientep/historial" method="post">
-                <input type="hidden" name="clienteId" value="${cliente.clienteId}">
-                <button type="submit" class="btn btn-success">Historial</button>
+            <form action="${pageContext.request.contextPath}" method="post">
+                <input type="hidden" name="" value="">
+                <button type="submit" class="btn btn-success">Chat</button>
             </form>
 
             <h2>Información de usuario</h2>
