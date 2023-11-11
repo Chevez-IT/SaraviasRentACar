@@ -85,25 +85,6 @@ public class EmpleadoCLIModel {
         }
     }
 
-    public List<ArquileresEntity> obtenerAlquilerPorCliente(String clienteId) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-
-        try {
-            String hql = "SELECT a FROM ArquileresEntity a " +
-                    "JOIN a.clientesByClienteActual aa " +
-                    "WHERE a.estadoArquiler = 'Alquilado' " +
-                    "AND aa.arquileresByClienteId = :clienteId";
-
-            List<ArquileresEntity> arquileres = session.createQuery(hql, ArquileresEntity.class)
-                    .setParameter("clienteId", clienteId)
-                    .getResultList();
-
-            return arquileres;
-        } finally {
-            session.close();
-        }
     }
 
 
-}

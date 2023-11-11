@@ -57,7 +57,7 @@ public class EmpleadoVEHController {
             model.addAttribute("propietariovehiculo", propietariovehiculo); // Pasamos el usuario a la vista
         }
 
-        return "VentasArquilerP";
+        return "empleadosView/VehiculosP";
     }
 
     @RequestMapping(value = "/vehiculop/activar", method = POST)
