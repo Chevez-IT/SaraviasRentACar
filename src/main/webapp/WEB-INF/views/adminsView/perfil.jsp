@@ -50,8 +50,8 @@
                 </c:otherwise>
             </c:choose>
 
-            <form action="" method="post">
-                <input type="hidden" name="usuarioId" value="${usuario.usuarioId}">
+            <form action="<c:url value='/Administrador/panel/admin/listamensaje' />" method="post" class="mt-4">
+                <input type="hidden" name="receptor" value="${usuario.usuarioId}">
                 <input type="hidden" name="emisor" value="<%= session.getAttribute("emisor") %>" />
                 <input type="hidden" name="emisor" value="${emisor}" />
                 <button type="submit" class="btn btn-primary">Chat</button>

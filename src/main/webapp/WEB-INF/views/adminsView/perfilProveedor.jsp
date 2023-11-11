@@ -32,7 +32,6 @@
             <p><strong>Teléfono: </strong>${proveedor.telefonoProp}</p>
             <p><strong>Dirección: </strong> ${proveedor.direccionProp}</p>
             <p><strong>Estado de Propietario: </strong> ${proveedor.estadoProp}</p>
-            <a href="#" class="btn btn-primary">Chat</a>
 
             <h2>Información de usuario</h2>
             <p><strong>ID Usuario: </strong>${usuario.usuarioId}</p>
