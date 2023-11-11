@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2023 a las 10:01:09
+-- Tiempo de generación: 11-11-2023 a las 06:03:27
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -43,7 +43,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`administrador_id`, `usuario_admin`, `foto_admin`, `nombres_admin`, `apellidos_admin`, `telefono_admin`, `fecha_creacion_admin`, `estado_admin`) VALUES
-('DC312A', 'DC312', '/images/user/311023-DC312A', 'Diego Ernesto', 'Chevez Montes', '6061-5247', '2023-11-01 03:23:08', 'Activo');
+('EF306A', 'EF306', 'default.png', 'Erick Eduardo', 'Fuentes Garcia', '85859685', '2023-11-11 03:12:02', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -57,11 +57,11 @@ CREATE TABLE `arquileres` (
   `titulo_arquiler` varchar(100) NOT NULL,
   `descripcion_arquiler` text NOT NULL,
   `precio_arquiler` decimal(10,2) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_finalizacion` date NOT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_finalizacion` date DEFAULT NULL,
   `estado_arquiler` varchar(25) NOT NULL,
-  `cliente_actual` varchar(6) NOT NULL,
-  `gestor_id` varchar(6) NOT NULL,
+  `cliente_actual` varchar(6) DEFAULT NULL,
+  `gestor_id` varchar(6) DEFAULT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -89,8 +89,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`cliente_id`, `usuario_cliente`, `foto_cli`, `nombres_cli`, `apellidos_cli`, `telefono_cli`, `direccion_cli`, `dui_cli`, `fecha_creacion_cli`, `estado_cli`) VALUES
-('AV820C', 'AV820', '/images/user/311023-AV820C', 'Angie Michelle', 'Valencia Ramos', '8975-5874', 'jaksdjkasbdajsbdasdasdawdwdasdasd', '24857496-8', '2023-11-01 03:25:36', 'Activo'),
-('EF912C', 'EF912', '/images/user/311023-EF912C', 'Erick Eduardo', 'Fuentes Garcia', '8759-8578', 'kjasdkjasdjkasbdjkasdasdasdasdas', '85749858-9', '2023-11-01 03:25:36', 'Activo');
+('BC021C', 'BC021', 'default.png', 'Bryan Steven', 'Cornejo Zavala', '60266866', 'San Salvador', '98657485-8', '2023-11-11 02:55:55', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -117,7 +116,8 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`empleado_id`, `usuario_empleado`, `foto_emp`, `nombres_emp`, `apellidos_emp`, `telefono_emp`, `dui_emp`, `direccion_emp`, `fecha_creacion_emp`, `creador_id`, `estado_emp`) VALUES
-('CR421E', 'CR421', '/images/user/311023-CR421E', 'Cesar Elias', 'Rodas Gonzales', '8598-2141', '87459698-8', 'sadasdasdasd', '2023-11-01 03:30:38', 'DC312A', 'Activo');
+('AV970E', 'AV970', 'default.png', 'Angie Michelle', 'Valencia Ramos', '57474747', '96969669-8', 'San Salvador', '2023-11-11 03:13:43', 'EF306A', 'Activo'),
+('CR358E', 'CR358', 'default.png', 'Cesar Elias', 'Rodas Gonzales', '74574574', '26326326-8', 'San Salvador', '2023-11-11 03:15:14', 'EF306A', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,7 @@ CREATE TABLE `img_vehiculos` (
 --
 
 CREATE TABLE `mensajes` (
-  `mensaje_id` varchar(12) NOT NULL,
+  `mensaje_id` int(12) NOT NULL,
   `mensaje` text NOT NULL,
   `emisor_mensaje` varchar(5) NOT NULL,
   `receptor_mensaje` varchar(5) NOT NULL,
@@ -165,13 +165,6 @@ CREATE TABLE `propietarios` (
   `gestor_id` varchar(6) NOT NULL,
   `estado_prop` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `propietarios`
---
-
-INSERT INTO `propietarios` (`propietario_id`, `usuario_propietario`, `foto_prop`, `nombres_prop`, `apellidos_prop`, `telefono_prop`, `dui_prop`, `direccion_prop`, `fecha_creacion_prop`, `gestor_id`, `estado_prop`) VALUES
-('BC321P', 'BC321', '/images/user/311023-BC321P', 'Bryan Steven', 'Cornejo Zavala', '2154-5421', '25416985-5', 'sdasghasdsadasdasd', '2023-11-01 03:32:36', 'CR421E', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -214,11 +207,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`usuario_id`, `username`, `correo_user`, `contrasena_user`, `rol_id`, `estado_user`) VALUES
-('AV820', 'AngieValencia', 'angievalencia@gmail.com', 'passw0rd123', '4', 'Activo'),
-('BC321', 'BryanCornejo', 'bryancornejo@gmail.com', 'passw0rd123', '3', 'Activo'),
-('CR421', 'CesarRodas', 'cesarrodas@gmail.com', 'passw0rd123', '2', 'Activo'),
-('DC312', 'DiegoChevez', 'diegochevez144@gmail.com', 'passw0rd123', '1', 'Activo'),
-('EF912', 'ErickFuentes', 'erickfuentes@gmail.com', 'passw0rd123', '4', 'Activo');
+('AV970', 'AngieValencia970', 'angievalenciait@gmail.com', '$2a$10$Jn.opgiyBrgC4UGTAjLruOpF40f.Smck4mYk0wRXf8la775BKWywu', '3', 'Activo'),
+('BC021', 'BryanCornejo021', 'Bryyansteeven123456789@gmail.com', '$2a$10$.OI9ylVozoV0tiU1wX/JT.GnLtOxP3ttmH.usPoRZiz0sN8s04Mgu', '4', 'Activo'),
+('CR358', 'CesarRodas358', 'cesareliasrodas26@gmail.com', '$2a$10$vlQ0kRIEB7Gd5ahDlV4Rsuwo51QtoCFT3XKn6qAjnB7RM1usCqhwu', '3', 'Activo'),
+('DC907', 'DiegoChevez907', 'diegochevez144@gmail.com', '$2a$10$I8IFm6YdsZqqQrwoZDI2R.E8LF02BfxpdZk3jKahDCG8klzrZoVKm', '1', 'Activo'),
+('EF306', 'ErickFuentes306', 'erickfuentes.it@gmail.com', '$2a$10$c.qAsCEikzmokaJtkjMeL.rhFU4XHYHa.pFm20K9PL3Y1Mw.96dCm', '2', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -253,10 +246,10 @@ CREATE TABLE `ventas` (
   `titulo_venta` varchar(100) NOT NULL,
   `descripcion_venta` varchar(100) NOT NULL,
   `precio_venta` varchar(255) NOT NULL,
-  `comprador_venta` varchar(6) NOT NULL,
-  `fecha_compra_venta` date NOT NULL,
+  `comprador_venta` varchar(6) DEFAULT NULL,
+  `fecha_compra_venta` date DEFAULT NULL,
   `estado_venta` varchar(25) NOT NULL,
-  `gestor_id` varchar(6) NOT NULL,
+  `gestor_id` varchar(6) DEFAULT NULL,
   `fecha_creacion_venta` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -350,6 +343,16 @@ ALTER TABLE `ventas`
   ADD KEY `vehiculo_id` (`vehiculo_id`),
   ADD KEY `gestor_id` (`gestor_id`),
   ADD KEY `comprador_venta` (`comprador_venta`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  MODIFY `mensaje_id` int(12) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

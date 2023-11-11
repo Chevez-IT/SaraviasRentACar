@@ -138,4 +138,15 @@ public class ClientesEntity implements Serializable {
 	public void setVentasByClienteId(Collection<VentasEntity> ventasByClienteId) {
 		this.ventasByClienteId = ventasByClienteId;
 	}
+
+
+	String correo;
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
 }

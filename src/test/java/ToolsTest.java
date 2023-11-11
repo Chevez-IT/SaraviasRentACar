@@ -26,8 +26,8 @@ public class ToolsTest {
 
 	public static void username(){
 		Tools tools = new Tools();
-		String user = tools.GenerarUsername("Diego Ernesto", "Chevez Montes");
-		String idIniciales = tools.GenerarIdIniciales("Diego Ernessto", "Chevez Montes");
+		String user = tools.GenerarUsername("Sergio Carlos", "Perez Sainz");
+		String idIniciales = tools.GenerarIdIniciales("Sergio Carlos", "Perez Sainz");
 		String idNRamdom = tools.GenerarIdNRandom();
 
 		String username = user + idNRamdom;
