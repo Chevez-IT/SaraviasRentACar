@@ -30,6 +30,7 @@
     <mapping class="sv.saraviasrenacar.www.entities.VehiculosEntity"/>
     <mapping resource="VentasEntity.hbm.xml"/>
     <mapping class="sv.saraviasrenacar.www.entities.VentasEntity"/>
+
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

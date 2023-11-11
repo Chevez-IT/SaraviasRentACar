@@ -62,6 +62,7 @@ public class Tools {
 
 		return primeraLetraNombres + primeraLetraApellidos;
 	}
+
 	private String obtenerPrimeraLetra(String cadena) {
 		if (cadena != null && !cadena.isEmpty()) {
 			return cadena.substring(0, 1);
