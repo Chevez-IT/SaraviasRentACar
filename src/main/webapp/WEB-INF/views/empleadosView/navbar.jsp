@@ -30,9 +30,6 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/EmpleadoARQ/listarq">Arquileres</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="${pageContext.request.contextPath}/EmpleadoDASH/inicio">Inicio</a>
-        </li>
       </ul>
     </div>
     <ul class="navbar-nav ml-auto">
